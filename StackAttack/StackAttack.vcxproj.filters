@@ -19,4 +19,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Block.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Column.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Hominho.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Space.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+  </ItemGroup>
 </Project>

@@ -141,6 +141,12 @@
   <ItemGroup>
     <ClCompile Include="StackAttack.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Block.h" />
+    <ClInclude Include="Column.h" />
+    <ClInclude Include="Hominho.h" />
+    <ClInclude Include="Space.h" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
