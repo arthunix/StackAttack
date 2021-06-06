@@ -50,8 +50,8 @@ public:
 			for (int i = 0; i < (top - 1); i++)
 			{
 				columnline[i] = aux[i + 1];
-				top = top - 1;
 			}
+			top = top - 1;
 			return true;
 		}
 		return false;

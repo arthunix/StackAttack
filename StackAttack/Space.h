@@ -8,18 +8,19 @@
 
 using namespace std;
 
-/* This module is responsible to the game matrix, it will be all the columns */
+/* This module is responsible to the game matrix, it will be all the columns  and everything */
 
 class space {
 private:
 	column matrix[10];
+	hominho player;
+
 public:
 	/* Here we need to initiate all itens with zero
 	* Void block is color zero? is it a good idea?
 	*/
 	space() {};
 
-	// We call this method all times one block fall in the space matrix
 	bool allfirstoccuped() {
 		for (int i = 0; i < 11; i++)
 		{
@@ -30,6 +31,7 @@ public:
 		return true;
 	}
 
+	// We call this method all times one block fall in the space matrix
 	/* Remove the first elements from all the columns */
 	bool removeallfirst() {
 		if (allfirstoccuped())
@@ -49,6 +51,7 @@ public:
 		matrix[column].addblock(ohmyblock);
 	}
 
+
 	/*
 	* We call these two methods from Hominho Class?????
 	* Call we??? answer me? :( It it right? Ohhh baby :(
@@ -58,12 +61,13 @@ public:
 	// From here to down so ladeira abaixo bixo
 
 	bool leftoccuped(unsigned short int from) {
-		return matrix[from - 1].gettop() < matrix[from].gettop();
+		return matrix[from - 1].gettop() >= matrix[from].gettop();
 	}
 
 	bool rightoccuped(unsigned short int from) {
-		return matrix[from + 1].gettop() < matrix[from].gettop();
+		return matrix[from + 1].gettop() >= matrix[from].gettop();
 	}
+
 
 	bool movleft(unsigned short int from) {
 		if (from != 0)
@@ -94,6 +98,52 @@ public:
 		}
 		return false;
 	}
+
+	// Hominho movimentation
+	bool hominhojump() {
+		if (player.gethigh() < 4) {
+			player.sethigh(player.gethigh() + 1);
+			return true;
+		}
+		return false;
+	}
+
+	bool hominhofall() {
+		if (matrix[player.getcolumn()].gettop() < player.gethigh()) {
+			player.sethigh(matrix[player.getcolumn()].gettop());
+		}
+	}
+
+	bool hominhogoleft() {
+		if (player.getcolumn() != 0)
+		{
+			if (!leftoccuped(player.getcolumn()))
+			{
+				player.setcolumn(player.getcolumn() - 1);
+				/* Here we need to call fall method */
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	bool hominhogoright() {
+		if (player.getcolumn() != 9)
+		{
+			if (!rightoccuped(player.getcolumn()))
+			{
+				player.setcolumn(player.getcolumn() + 1);
+				/* Here we need to call fall method */
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
+	bool hominhopushleft();
+	bool hominhopushright();
 };
 
 #endif /* SPACE_H */

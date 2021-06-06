@@ -18,12 +18,20 @@ public:
 		return alive;
 	}
 
+	bool kill() {
+		if (alive) {
+			alive = false;
+			return true;
+		}
+		return false;
+	}
+
 	unsigned short int getcolumn() {
 		return column;
 	}
 
 	bool setcolumn(unsigned short int column) {
-		if ((column < 10) && (column >= 0)) {
+		if ((column <= 9) && (column >= 0)) {
 			this->column = column;
 			return true;
 		}
@@ -35,28 +43,12 @@ public:
 	}
 
 	bool sethigh(unsigned short int high) {
-		if ((high < 5) && (high >= 0)) {
+		if ((high <= 4) && (high >= 0)) {
 			this->high = high;
 			return true;
 		}
 		return false;
 	}
-
-	/*
-	bool leftoccuped(space matrix) {
-		return matrix[column - 1].gettop() < matrix[column].gettop();
-	}
-
-	bool rightoccuped() {
-		return matrix[from + 1].gettop() < matrix[from].gettop();
-	}
-
-	bool pushright();
-	bool pushleft();
-	bool goleft();
-	bool goright();
-	bool jump();
-	bool fall();*/
 };
 
 #endif /* HOMINHO_H */
