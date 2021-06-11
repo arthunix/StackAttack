@@ -18,6 +18,7 @@ public:
 		return alive;
 	}
 
+	// You call this method when game over
 	bool kill() {
 		if (alive) {
 			alive = false;

@@ -4,11 +4,12 @@
 class block {
 private:
 	/* It's just the atributte for color
-	* 1 for red
-	* 2 for green
-	* 3 for blue
-	* 4 for yellow
-	* 5 for orange
+	* 1 for orange
+	* 2 for blue
+	* 3 for pink
+	* 4 for red
+	* 5 for yellow
+	* 6 for green
 	*/
 	unsigned short int color = 1;
 public:
