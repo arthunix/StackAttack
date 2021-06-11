@@ -120,7 +120,7 @@ public:
 			if (!leftoccuped(player.getcolumn()))
 			{
 				player.setcolumn(player.getcolumn() - 1);
-				/* Here we need to call fall method */
+				hominhofall();
 				return true;
 			}
 			return false;
@@ -134,7 +134,7 @@ public:
 			if (!rightoccuped(player.getcolumn()))
 			{
 				player.setcolumn(player.getcolumn() + 1);
-				/* Here we need to call fall method */
+				hominhofall();
 				return true;
 			}
 			return false;
@@ -142,8 +142,34 @@ public:
 		return false;
 	}
 
-	bool hominhopushleft();
-	bool hominhopushright();
+	bool hominhopushleft() {
+		if (player.getcolumn() != 0)
+		{
+			if (leftoccuped(player.getcolumn()))
+			{
+				player.setcolumn(player.getcolumn() - 1);
+				hominhofall();
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
+
+
+	bool hominhopushright() {
+		if (player.getcolumn() != 9)
+		{
+			if (rightoccuped(player.getcolumn()))
+			{
+				player.setcolumn(player.getcolumn() + 1);
+				hominhofall();
+				return true;
+			}
+			return false;
+		}
+		return false;
+	}
 };
 
 #endif /* SPACE_H */
