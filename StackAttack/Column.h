@@ -12,7 +12,6 @@ private:
 	* 
 	* I gess we need to call methods from this class on Space class
 	*/
-
 	block columnline[5];
 	unsigned short int top = 0; // Zero for void block it is not a good idea See @Space.h
 public:
