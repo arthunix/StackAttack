@@ -162,6 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="objects\images\blocks.bmp" />
+    <Image Include="objects\images\psicopattack.bmp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

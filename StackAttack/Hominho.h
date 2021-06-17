@@ -9,8 +9,8 @@ private:
 	bool alive = true;
 
 	// Where i am
-	unsigned short int column = 5; // from 0 to 9
-	unsigned short int high = 0; // from 0 to 4
+	unsigned short int column = 400; // from 0 to 800
+	unsigned short int high = 0; // from 0 to 600
 public:
 	hominho() {};
 
@@ -32,7 +32,7 @@ public:
 	}
 
 	bool setcolumn(unsigned short int column) {
-		if ((column <= 9) && (column >= 0)) {
+		if ((column <= 800) && (column >= 0)) {
 			this->column = column;
 			return true;
 		}
@@ -44,7 +44,7 @@ public:
 	}
 
 	bool sethigh(unsigned short int high) {
-		if ((high <= 4) && (high >= 0)) {
+		if ((high <= 600) && (high >= 0)) {
 			this->high = high;
 			return true;
 		}

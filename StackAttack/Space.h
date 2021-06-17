@@ -170,6 +170,22 @@ public:
 		}
 		return false;
 	}
+
+	// ?? Hominho
+	unsigned short int getposx() {
+		return player.getcolumn();
+	}
+	unsigned short int getposy() {
+		return player.gethigh();
+	}
+	bool setposx(unsigned short int posx) {
+		player.setcolumn(posx);
+		return true;
+	}
+	bool setposy(unsigned short int posy) {
+		player.sethigh(posy);
+		return true;
+	}
 };
 
 #endif /* SPACE_H */

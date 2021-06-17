@@ -40,5 +40,8 @@
     <Image Include="objects\images\blocks.bmp">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="objects\images\psicopattack.bmp">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>
