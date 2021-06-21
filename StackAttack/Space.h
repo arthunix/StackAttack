@@ -101,8 +101,8 @@ public:
 
 	// Hominho movimentation
 	bool hominhojump() {
-		if (player.gethigh() < 4) {
-			player.sethigh(player.gethigh() + 1);
+		if (player.gethigh() > 400) {
+			player.sethigh(player.gethigh() - 50);
 			return true;
 		}
 		return false;
@@ -114,7 +114,7 @@ public:
 		}
 	}
 
-	bool hominhogoleft() {
+	/*bool hominhogoleft() {
 		if (player.getcolumn() != 0)
 		{
 			if (!leftoccuped(player.getcolumn()))
@@ -140,7 +140,7 @@ public:
 			return false;
 		}
 		return false;
-	}
+	}*/
 
 	bool hominhopushleft() {
 		if (player.getcolumn() != 0)

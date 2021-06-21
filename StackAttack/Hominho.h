@@ -10,7 +10,7 @@ private:
 
 	// Where i am
 	unsigned short int column = 400; // from 0 to 800
-	unsigned short int high = 0; // from 0 to 600
+	unsigned short int high = 500; // from 600 to 0
 public:
 	hominho() {};
 
@@ -32,7 +32,7 @@ public:
 	}
 
 	bool setcolumn(unsigned short int column) {
-		if ((column <= 800) && (column >= 0)) {
+		if ((column <= 600) && (column >= 150)) {
 			this->column = column;
 			return true;
 		}
@@ -44,7 +44,7 @@ public:
 	}
 
 	bool sethigh(unsigned short int high) {
-		if ((high <= 600) && (high >= 0)) {
+		if ((high >= 300) && (high <= 500)) {
 			this->high = high;
 			return true;
 		}
