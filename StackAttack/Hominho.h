@@ -5,21 +5,23 @@
 
 class hominho {
 private:
-	// Am I composed of blocks too?
+	// Am I composed of blocks too? I am in gamespace but I am not part of it?
 	bool alive = true;
 
-	// Where i am
-	unsigned short int column = 400; // from 0 to 800
-	unsigned short int high = 500; // from 600 to 0
+	/* Where i am ? See @Block.h for internal block/column position paradigma */
+	unsigned short int posx = 0;
+	unsigned short int posy = 100;
+	unsigned short int line = 0; // from 0 to 4
+	unsigned short int column = 5; // from 0 to 10
 public:
 	hominho() {};
 
+	/* For the character life */
 	bool getlife() {
 		return alive;
 	}
-
-	// You call this method when game over
 	bool kill() {
+		// You call this method when game over
 		if (alive) {
 			alive = false;
 			return true;
@@ -27,25 +29,51 @@ public:
 		return false;
 	}
 
-	unsigned short int getcolumn() {
-		return column;
-	}
+	/* Related to the character internal position */
 
-	bool setcolumn(unsigned short int column) {
-		if ((column <= 600) && (column >= 150)) {
-			this->column = column;
+	/* For the x-axis */
+	bool setposx(unsigned short int posx) {
+		if ((posx >= 0) && (posx <= 50)) {
+			this->posx = posx;
 			return true;
 		}
 		return false;
 	}
-
-	unsigned short int gethigh() {
-		return high;
+	unsigned short int getposx() {
+		return posx;
+	}
+	/* For the y-axis */
+	bool setposy(unsigned short int posy) {
+		if ((posy >= 0) && (posy <= 100)) {
+			this->posy = posy;
+			return true;
+		}
+		return false;
+	}
+	unsigned short int getposy() {
+		return posy;
 	}
 
-	bool sethigh(unsigned short int high) {
-		if ((high >= 300) && (high <= 500)) {
-			this->high = high;
+	/* Related to the character matrix control */
+
+	/* For character line control */
+	unsigned short int getline() {
+		return line;
+	}
+	bool setline(unsigned short int line) {
+		if ((line >= 0) && (line <= 10)) {
+			this->line = line;
+			return true;
+		}
+		return false;
+	}
+	/* For character column control */
+	unsigned short int getcolumn() {
+		return column;
+	}
+	bool setcolumn(unsigned short int column) {
+		if ((column <= 9) && (column >= 0)) {
+			this->column = column;
 			return true;
 		}
 		return false;
