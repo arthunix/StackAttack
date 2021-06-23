@@ -15,11 +15,9 @@ private:
 	unsigned short int color = 0;
 
 	/// <Position and column/line paradigma>
-	/// I think this position refers to the position inside the column
-	/// These values can then be within 0 and 50 (block size too)
-	/// it moves from 0 to 50 at the defined velocity when it reach in
-	/// next or previus this value will be reset, it is an internal
-	/// position value
+	/// I think this position refers to the line and the column internal
+	/// position... the main method will call this for drawing they need
+	/// to be update every time in every change
 	/// </we set an internal position value for the block flutuancy>
 	unsigned short int line = 0;
 	unsigned short int column = 0;

@@ -59,8 +59,7 @@ public:
 			/// I think it is not here we will do it... but the main method
 			/// when refresh the frame will call the gravity and if the
 			/// position that is not the floor will see it and then update
-			/// the position at the gravity velocity until this reach at
-			/// your proper
+			/// the position until the block reach to your proper place
 			/// <But this gravity bullshit is not just here See @Hominho.h>
 			return true;
 		}

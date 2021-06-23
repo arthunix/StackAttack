@@ -8,7 +8,7 @@ private:
 	// Am I composed of blocks too? I am in gamespace but I am not part of it?
 	bool alive = true;
 
-	/* Where i am ? See @Block.h for internal block/column position paradigma */
+	/* Where i am ? See @Block.h for more */
 	unsigned short int line = 0; // from 0 to 4
 	unsigned short int column = 5; // from 0 to 10
 public:
