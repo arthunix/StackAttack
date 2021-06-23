@@ -120,6 +120,7 @@ int main()
 			stop = true;
 		}
 
+
 		/* Game drawing and drawing controller */
 
 		/* Game frame update */
