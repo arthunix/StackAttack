@@ -14,16 +14,14 @@ private:
 	column matrix[10];
 	hominho player;
 
-	unsigned short int fakefloor = 0; // It's the position we shold to to draw the character?
-	unsigned short int reg_posy = 0; // Position of the last introduced block
 public:
 	/* Here we need to initiate all itens with zero, void block is color zero? is it a good idea? */
-	space() {
-		fakefloor = HIGH_DISPLAY - 100;
-		reg_posy = player.getposy();
-	};
+	space() {};
 
 	/* For the block in space game management */
+	column getline(int index) {
+		return matrix[index];
+	}
 
 	bool allfirstoccuped() {
 		for (int i = 0; i < 11; i++)
@@ -49,13 +47,17 @@ public:
 	/* Here we need to receive a a number from random numbers generator
 	* It's a pseudo-random numbers generator :( cryptography cry buá
 	*/
-	bool insertblock(block ohmyblock, unsigned short int column) {
+	bool insertblock(block ohmyblock, unsigned short int column, unsigned short int color) {
+		ohmyblock.setcolor(color);
+		ohmyblock.setcolumn(column);
 		matrix[column].addblock(ohmyblock);
 	}
-	bool insertblock(block ohmyblock, unsigned short int column, unsigned short int line) {
+	bool insertblock(block ohmyblock, unsigned short int column, unsigned short int line, unsigned short int color) {
+		ohmyblock.setcolor(color);
+		ohmyblock.setline(line);
+		ohmyblock.setcolumn(column);
 		matrix[column].addblock(ohmyblock, line); // Here is from the middle
 	}
-
 
 	bool leftoccuped(unsigned short int from) {
 		return matrix[from - 1].gettop() >= matrix[from].gettop();
@@ -63,6 +65,7 @@ public:
 	bool rightoccuped(unsigned short int from) {
 		return matrix[from + 1].gettop() >= matrix[from].gettop();
 	}
+
 	bool movleft(unsigned short int from) {
 		if (from != 0)
 		{
@@ -94,20 +97,26 @@ public:
 
 	/* For character movimentation */
 	bool hominhojump() {
-		if (player.getposy() != 0){
-			player.setline(player.getline() + 1);
-			player.setposy(0);
+		player.setline(player.getline() + 1);
+		return true;
+	}
+
+	bool hominhofall() {
+		if (matrix[player.getcolumn()].gettop() != player.getline())
+		{
+			player.setline(player.getline() - 1);
 			return true;
 		}
 		return false;
 	}
 
-	/*
-	bool hominhofall() {
-		if (matrix[player.getcolumn()].gettop() < player.gethigh()) {
-			player.sethigh(matrix[player.getcolumn()].gettop());
+	bool fall() {
+		for (int i = 0; i <= 9; i++) {
+			matrix[i].blockfall();
 		}
-	}*/
+		hominhofall();
+		return true;
+	}
 
 	/* For the character management in gamespace */
 	unsigned short int getcolumn() {
@@ -116,27 +125,12 @@ public:
 	unsigned short int getline() {
 		return player.getline();
 	}
-	unsigned short int getposy() {
-		return player.getposy();
-	}
-	unsigned short int getposx() {
-		return player.getposx();
-	}
-
 	bool setcolumn(unsigned short int column) {
 		player.setcolumn(column);
 		return true;
 	}
 	bool setline(unsigned short int line) {
 		player.setline(line);
-		return true;
-	}
-	bool setposx(unsigned short int posx) {
-		player.setposx(posx);
-		return true;
-	}
-	bool setposy(unsigned short int posy) {
-		player.setposy(posy);
 		return true;
 	}
 };

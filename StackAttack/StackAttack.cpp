@@ -119,29 +119,12 @@ int main()
 		{
 			stop = true;
 		}
-		/*
-		// Game flowability
-		gamespace.setposx(gamespace.getposx() + (teclas[RIGHT] * 3));
-		gamespace.setposx(gamespace.getposx() - (teclas[LEFT] * 3));
-
-		if (teclas[UP])
-		{
-			gamespace.setposy(gamespace.getposy() - (teclas[UP] * 50));
-			teclas[UP] = false;
-		}
-		// Game drawing
-		al_draw_bitmap(hominho, gamespace.getposx(), gamespace.getposy(), NULL);
-		al_draw_textf(font, al_map_rgb(255, 255, 255), length_display / 2, high_display / 2, ALLEGRO_ALIGN_CENTRE, "Contador: %d", al_get_timer_count(timer));
-		al_flip_display();
-		al_clear_to_color(al_map_rgb(0, 0, 0));*/
-
-
-
 
 		/* Game drawing and drawing controller */
 
 		/* Game frame update */
-
+		
+		al_draw_bitmap(hominho, 150 + (gamespace.getcolumn()*50), (high_display-100)-(gamespace.getline()*50), NULL);
 		al_draw_textf(font, al_map_rgb(255, 255, 255), length_display / 2, high_display / 2, ALLEGRO_ALIGN_CENTRE, "Contador: %d", al_get_timer_count(timer));
 		al_flip_display();
 		al_clear_to_color(al_map_rgb(0, 0, 0));

@@ -21,8 +21,6 @@ private:
 	/// next or previus this value will be reset, it is an internal
 	/// position value
 	/// </we set an internal position value for the block flutuancy>
-	unsigned short int posx = 0;
-	unsigned short int posy = 0;
 	unsigned short int line = 0;
 	unsigned short int column = 0;
 public:
@@ -33,25 +31,6 @@ public:
 	}
 	unsigned short int getcolor() {
 		return color;
-	}
-
-	/* Related to the block internal position */
-
-	/* For the x-axis */
-	bool setposx(unsigned short int pos) {
-		this->posx = pos;
-		return true;
-	}
-	unsigned short int getposx() {
-		return posx;
-	}
-	/* For the y-axis */
-	bool setposy(unsigned short int pos) {
-		this->posy = pos;
-		return true;
-	}
-	unsigned short int getposy() {
-		return posy;
 	}
 
 	/* Related to the block matrix control */

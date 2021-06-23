@@ -9,8 +9,6 @@ private:
 	bool alive = true;
 
 	/* Where i am ? See @Block.h for internal block/column position paradigma */
-	unsigned short int posx = 0;
-	unsigned short int posy = 100;
 	unsigned short int line = 0; // from 0 to 4
 	unsigned short int column = 5; // from 0 to 10
 public:
@@ -27,31 +25,6 @@ public:
 			return true;
 		}
 		return false;
-	}
-
-	/* Related to the character internal position */
-
-	/* For the x-axis */
-	bool setposx(unsigned short int posx) {
-		if ((posx >= 0) && (posx <= 50)) {
-			this->posx = posx;
-			return true;
-		}
-		return false;
-	}
-	unsigned short int getposx() {
-		return posx;
-	}
-	/* For the y-axis */
-	bool setposy(unsigned short int posy) {
-		if ((posy >= 0) && (posy <= 100)) {
-			this->posy = posy;
-			return true;
-		}
-		return false;
-	}
-	unsigned short int getposy() {
-		return posy;
 	}
 
 	/* Related to the character matrix control */
