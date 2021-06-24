@@ -18,8 +18,9 @@ public:
 	/* Here we need to initiate all itens with zero, void block is color zero? is it a good idea? */
 	space() {};
 
+
 	/* For the block in space game management */
-	column getline(int index) {
+	column bloquinhogetline(int index) {
 		return matrix[index];
 	}
 
@@ -51,12 +52,14 @@ public:
 		ohmyblock.setcolor(color);
 		ohmyblock.setcolumn(column);
 		matrix[column].addblock(ohmyblock);
+		return true;
 	}
 	bool insertblock(block ohmyblock, unsigned short int column, unsigned short int line, unsigned short int color) {
 		ohmyblock.setcolor(color);
 		ohmyblock.setline(line);
 		ohmyblock.setcolumn(column);
 		matrix[column].addblock(ohmyblock, line); // Here is from the middle
+		return true;
 	}
 
 	bool leftoccuped(unsigned short int from) {
@@ -102,12 +105,24 @@ public:
 	}
 
 	bool hominhofall() {
-		if (matrix[player.getcolumn()].gettop() != player.getline())
+		while (matrix[player.getcolumn()].gettop() != player.getline())
 		{
+			cout << "\ncolumn      : " << player.getcolumn() << endl;
+			cout << "column topo : " << matrix[player.getcolumn()].gettop() << endl;
+			cout << "hominho line: " << player.getline() << endl;
 			player.setline(player.getline() - 1);
-			return true;
 		}
-		return false;
+		return true;
+	}
+
+	bool hominhomovleft() {
+		player.setcolumn(player.getcolumn() - 1);
+		return true;
+	}
+
+	bool hominhomovright() {
+		player.setcolumn(player.getcolumn() + 1);
+		return true;
 	}
 
 	bool fall() {

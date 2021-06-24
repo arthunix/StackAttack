@@ -20,7 +20,7 @@ private:
 	/// to be update every time in every change
 	/// </we set an internal position value for the block flutuancy>
 	unsigned short int line = 0;
-	unsigned short int column = 0;
+	unsigned short int column = 3;
 public:
 	/* Related to the block color */
 	bool setcolor(unsigned short int color) {
