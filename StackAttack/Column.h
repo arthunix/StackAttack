@@ -31,6 +31,11 @@ public:
 		return line[index];
 	}
 
+	bool setblockcolor(unsigned short int color, unsigned short int index) {
+		line[index].setcolor(color);
+		return true;
+	}
+
 	bool settop(unsigned short int top) {
 		if (top <= 5) {
 			this->top = top;
@@ -47,11 +52,12 @@ public:
 		}
 		return false;
 	}
-	bool addblock(block mynewblock) {
+	bool addblock(unsigned short int column, unsigned short int color) {
 		if (!fullcolumn()) {
 			// The block starts from the above, the fall from it
-			mynewblock.setline(10);
-			line[10] = mynewblock;
+			line[10].setline(10);
+			line[10].setcolumn(column);
+			line[10].setcolor(color);
 			last = 10;
 			top = top + 1;
 			/// <Gravity considerations and new ideas>
@@ -65,11 +71,12 @@ public:
 		}
 		return false;
 	}
-	bool addblock(block mynewblock, unsigned short int l) {
+	bool addblock(unsigned short int l, unsigned short int column, unsigned short int color) {
 		if (!fullcolumn()) {
 			// The block starts from the above, the fall from it
-			mynewblock.setline(l);
-			line[l] = mynewblock;
+			line[l].setline(l);
+			line[l].setcolumn(column);
+			line[l].setcolor(color);
 			last = l;
 			top = top + 1;
 			return true;

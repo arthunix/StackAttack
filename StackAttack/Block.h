@@ -12,15 +12,10 @@ private:
 	* 5 for yellow
 	* 6 for green
 	*/
+	
 	unsigned short int color = 0;
-
-	/// <Position and column/line paradigma>
-	/// I think this position refers to the line and the column internal
-	/// position... the main method will call this for drawing they need
-	/// to be update every time in every change
-	/// </we set an internal position value for the block flutuancy>
 	unsigned short int line = 0;
-	unsigned short int column = 3;
+	unsigned short int column = 0;
 public:
 	/* Related to the block color */
 	bool setcolor(unsigned short int color) {
@@ -28,7 +23,7 @@ public:
 		return true;
 	}
 	unsigned short int getcolor() {
-		return color;
+		return this->color;
 	}
 
 	/* Related to the block matrix control */

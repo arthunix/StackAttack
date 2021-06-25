@@ -48,49 +48,45 @@ public:
 	/* Here we need to receive a a number from random numbers generator
 	* It's a pseudo-random numbers generator :( cryptography cry buá
 	*/
-	bool insertblock(block ohmyblock, unsigned short int column, unsigned short int color) {
-		ohmyblock.setcolor(color);
-		ohmyblock.setcolumn(column);
-		matrix[column].addblock(ohmyblock);
+	bool insertblock(unsigned short int column, unsigned short int color) {
+		matrix[column].addblock(column, color);
 		return true;
 	}
-	bool insertblock(block ohmyblock, unsigned short int column, unsigned short int line, unsigned short int color) {
-		ohmyblock.setcolor(color);
-		ohmyblock.setline(line);
-		ohmyblock.setcolumn(column);
-		matrix[column].addblock(ohmyblock, line); // Here is from the middle
+
+	bool insertblock(unsigned short int line, unsigned short int column, unsigned short int color) {
+		matrix[column].addblock(line, column, color);
 		return true;
 	}
 
 	bool leftoccuped(unsigned short int from) {
-		return matrix[from - 1].gettop() >= matrix[from].gettop();
+		return matrix[from - 1].gettop() > matrix[from].gettop();
 	}
 	bool rightoccuped(unsigned short int from) {
-		return matrix[from + 1].gettop() >= matrix[from].gettop();
+		return matrix[from + 1].gettop() > matrix[from].gettop();
 	}
-
-	bool movleft(unsigned short int from) {
+	
+	bool blockmovleft(unsigned short int from) {
 		if (from != 0)
 		{
 			if (!leftoccuped(from))
 			{
-				block aux;
-				aux = matrix[from].removetopblock();
-				matrix[from - 1].addblock(aux, aux.getline());
+				block aux = matrix[from].removetopblock();
+				matrix[from - 1].addblock(aux.getline(), aux.getcolumn() - 1,aux.getcolor());
+				matrix[from].setblockcolor(0, matrix[from].gettop());
 				return true;
 			}
 			return false;
 		}
 		return false;
 	}
-	bool movright(unsigned short int from) {
+	bool blockmovright(unsigned short int from) {
 		if (from != 9)
 		{
 			if (!rightoccuped(from))
 			{
-				block aux;
-				aux = matrix[from].removetopblock();
-				matrix[from + 1].addblock(aux, aux.getline());
+				block aux = matrix[from].removetopblock();
+				matrix[from + 1].addblock(aux.getline(), aux.getcolumn() + 1, aux.getcolor());
+				matrix[from].setblockcolor(0, matrix[from].gettop());
 				return true;
 			}
 			return false;
@@ -116,13 +112,44 @@ public:
 	}
 
 	bool hominhomovleft() {
-		player.setcolumn(player.getcolumn() - 1);
-		return true;
+		if (leftoccuped(player.getcolumn())) {
+			cout << "oi to ocupado" << endl;
+			if (leftoccuped(player.getcolumn() - 1)) {
+				cout << "oi to ocupado 2" << endl;
+				return false;
+			}
+			else {
+				blockmovleft(player.getcolumn() - 1);
+				player.setcolumn(player.getcolumn() - 1);
+				cout << "oi to ocupado mas nem tanto" << endl;
+				return true;
+			}
+		}
+		else {
+			cout << "to passando sai da frente" << endl;
+			player.setcolumn(player.getcolumn() - 1);
+			return true;
+		}
+		return false;
 	}
 
 	bool hominhomovright() {
-		player.setcolumn(player.getcolumn() + 1);
-		return true;
+		if (rightoccuped(player.getcolumn())) {
+
+			if (rightoccuped(player.getcolumn() + 1)) {
+				return false;
+			}
+			else {
+				blockmovright(player.getcolumn() + 1);
+				player.setcolumn(player.getcolumn() + 1);
+				return true;
+			}
+		}
+		else {
+			player.setcolumn(player.getcolumn() + 1);
+			return true;
+		}
+		return false;
 	}
 
 	bool fall() {

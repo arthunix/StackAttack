@@ -15,7 +15,6 @@
 #define amarelo 25, 100, 25, 25
 #define verde 25, 125, 25, 25
 
-
 bool draw_blocks(space game, ALLEGRO_BITMAP* texture)
 {
 	for (int i = 0; i < 10; i++)
@@ -24,10 +23,10 @@ bool draw_blocks(space game, ALLEGRO_BITMAP* texture)
 		for (int u = 0; u < 5; u++)
 		{
 			block currentblock = currentcolumn.getblock(u);
-
-			cout << "\ncoluna: " << i << endl;
+			
+			/*cout << "\ncoluna: " << i << endl;
 			cout << "linha   : " << u << endl;
-			cout << "cor     : " << currentblock.getcolor() << endl;
+			cout << "cor     : " << currentblock.getcolor() << endl;*/
 
 			if (currentblock.getcolor() != 0)
 			{
@@ -121,9 +120,9 @@ int main()
 
 	al_start_timer(timer);
 
-	block newblock;
-	newblock.setcolor(2);
-	gamespace.insertblock(newblock,3,2);
+	gamespace.insertblock(0,0,2);
+	gamespace.insertblock(0,1,4);
+	gamespace.insertblock(0,7,3);
 
 	while (!stop)
 	{
@@ -141,11 +140,11 @@ int main()
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_RIGHT:
 				gamespace.hominhomovright();
-				gamespace.fall();
+				gamespace.hominhofall();
 				break;
 			case ALLEGRO_KEY_LEFT:
 				gamespace.hominhomovleft();
-				gamespace.fall();
+				gamespace.hominhofall();
 				break;
 			case ALLEGRO_KEY_UP:
 				gamespace.hominhojump();
@@ -156,7 +155,7 @@ int main()
 		{
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_UP:
-				gamespace.fall();
+				gamespace.hominhofall();
 				break;
 			}
 		}
