@@ -121,8 +121,9 @@ int main()
 	al_start_timer(timer);
 
 	gamespace.insertblock(0,0,2);
-	gamespace.insertblock(0,1,4);
+	gamespace.insertblock(0,3,4);
 	gamespace.insertblock(0,7,3);
+	gamespace.insertblock(0, 8, 6);
 
 	while (!stop)
 	{

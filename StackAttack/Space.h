@@ -58,6 +58,13 @@ public:
 		return true;
 	}
 
+	bool leftoccuped() {
+		return player.getline() < matrix[player.getcolumn() - 1].gettop();
+	}
+	bool rightoccuped() {
+		return player.getline() < matrix[player.getcolumn() + 1].gettop();
+	}
+
 	bool leftoccuped(unsigned short int from) {
 		return matrix[from - 1].gettop() > matrix[from].gettop();
 	}
@@ -94,7 +101,7 @@ public:
 		return false;
 	}
 
-	/* For character movimentation */
+	/* For character movimentation in the gamespace */
 	bool hominhojump() {
 		player.setline(player.getline() + 1);
 		return true;
@@ -112,9 +119,9 @@ public:
 	}
 
 	bool hominhomovleft() {
-		if (leftoccuped(player.getcolumn())) {
+		if (leftoccuped()) {
 			cout << "oi to ocupado" << endl;
-			if (leftoccuped(player.getcolumn() - 1)) {
+			if (leftoccuped()) {
 				cout << "oi to ocupado 2" << endl;
 				return false;
 			}
@@ -134,9 +141,10 @@ public:
 	}
 
 	bool hominhomovright() {
-		if (rightoccuped(player.getcolumn())) {
-
-			if (rightoccuped(player.getcolumn() + 1)) {
+		if (rightoccuped())
+		{
+			if (rightoccuped())
+			{
 				return false;
 			}
 			else {
@@ -160,7 +168,7 @@ public:
 		return true;
 	}
 
-	/* For the character management in gamespace */
+	/* For the character getters and setters */
 	unsigned short int getcolumn() {
 		return player.getcolumn();
 	}

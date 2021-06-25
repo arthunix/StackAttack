@@ -13,6 +13,11 @@ private:
 	* 6 for green
 	*/
 	
+	/// <Position and column/line paradigma>
+	/// I think this position refers to the line and the column internal
+	/// position... the main method will call this for drawing they need
+	/// to be update every time in every change
+	/// </we set an internal position value for the block flutuancy>
 	unsigned short int color = 0;
 	unsigned short int line = 0;
 	unsigned short int column = 0;
