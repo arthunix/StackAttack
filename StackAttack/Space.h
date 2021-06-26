@@ -64,18 +64,18 @@ public:
 	bool rightoccuped() {
 		return player.getline() < matrix[player.getcolumn() + 1].gettop();
 	}
-
-	bool leftoccuped(unsigned short int from) {
-		return matrix[from - 1].gettop() > matrix[from].gettop();
+	
+	bool blockleftoccuped() {
+		return matrix[player.getcolumn() - 2].gettop() >= matrix[player.getcolumn() - 1].gettop();
 	}
-	bool rightoccuped(unsigned short int from) {
-		return matrix[from + 1].gettop() > matrix[from].gettop();
+	bool blockrightoccuped() {
+		return matrix[player.getcolumn() + 2].gettop() >= matrix[player.getcolumn() + 1].gettop();
 	}
 	
 	bool blockmovleft(unsigned short int from) {
 		if (from != 0)
 		{
-			if (!leftoccuped(from))
+			if (!leftoccuped())
 			{
 				block aux = matrix[from].removetopblock();
 				matrix[from - 1].addblock(aux.getline(), aux.getcolumn() - 1,aux.getcolor());
@@ -89,7 +89,7 @@ public:
 	bool blockmovright(unsigned short int from) {
 		if (from != 9)
 		{
-			if (!rightoccuped(from))
+			if (!rightoccuped())
 			{
 				block aux = matrix[from].removetopblock();
 				matrix[from + 1].addblock(aux.getline(), aux.getcolumn() + 1, aux.getcolor());
@@ -120,20 +120,20 @@ public:
 
 	bool hominhomovleft() {
 		if (leftoccuped()) {
-			cout << "oi to ocupado" << endl;
-			if (leftoccuped()) {
-				cout << "oi to ocupado 2" << endl;
+			cout << "esquerda do hominho ocupada" << endl;
+			if (blockleftoccuped()) {
+				cout << "esquerda do hominho ocupada por dois blocos" << endl;
 				return false;
 			}
 			else {
-				blockmovleft(player.getcolumn() - 1);
-				player.setcolumn(player.getcolumn() - 1);
-				cout << "oi to ocupado mas nem tanto" << endl;
+				cout << "esquerda do hominho ocupada mas por um bloco" << endl;
+				//blockmovleft(player.getcolumn() - 1);
+				//player.setcolumn(player.getcolumn() - 1);
 				return true;
 			}
 		}
 		else {
-			cout << "to passando sai da frente" << endl;
+			cout << "esquerda ta livre" << endl;
 			player.setcolumn(player.getcolumn() - 1);
 			return true;
 		}
@@ -143,17 +143,21 @@ public:
 	bool hominhomovright() {
 		if (rightoccuped())
 		{
-			if (rightoccuped())
+			cout << "direita do hominho ocupada" << endl;
+			if (blockrightoccuped())
 			{
+				cout << "direita do hominho ocupada por dois blocos" << endl;
 				return false;
 			}
 			else {
-				blockmovright(player.getcolumn() + 1);
-				player.setcolumn(player.getcolumn() + 1);
+				cout << "direita do hominho ocupada mas por um bloco" << endl;
+				//blockmovright(player.getcolumn() + 1);
+				//player.setcolumn(player.getcolumn() + 1);
 				return true;
 			}
 		}
 		else {
+			cout << "direita ta livre" << endl;
 			player.setcolumn(player.getcolumn() + 1);
 			return true;
 		}

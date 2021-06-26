@@ -124,6 +124,8 @@ int main()
 	gamespace.insertblock(0,3,4);
 	gamespace.insertblock(0,7,3);
 	gamespace.insertblock(0, 8, 6);
+	gamespace.insertblock(0, 6, 6);
+	gamespace.insertblock(1, 7, 5);
 
 	while (!stop)
 	{
