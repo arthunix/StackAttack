@@ -72,32 +72,14 @@ public:
 		return matrix[player.getcolumn() + 2].gettop() >= matrix[player.getcolumn() + 1].gettop();
 	}
 	
-	bool blockmovleft(unsigned short int from) {
-		if (from != 0)
-		{
-			if (!leftoccuped())
-			{
-				block aux = matrix[from].removetopblock();
-				matrix[from - 1].addblock(aux.getline(), aux.getcolumn() - 1,aux.getcolor());
-				matrix[from].setblockcolor(0, matrix[from].gettop());
-				return true;
-			}
-			return false;
-		}
+	bool blockmovleft() {
+		matrix[player.getcolumn() - 2].addblock(matrix[player.getcolumn() - 2].gettop(), player.getcolumn() - 2, matrix[player.getcolumn() - 1].getblock().getcolor());
+		matrix[player.getcolumn() - 1].removetopblock();
 		return false;
 	}
-	bool blockmovright(unsigned short int from) {
-		if (from != 9)
-		{
-			if (!rightoccuped())
-			{
-				block aux = matrix[from].removetopblock();
-				matrix[from + 1].addblock(aux.getline(), aux.getcolumn() + 1, aux.getcolor());
-				matrix[from].setblockcolor(0, matrix[from].gettop());
-				return true;
-			}
-			return false;
-		}
+	bool blockmovright() {
+		matrix[player.getcolumn() + 2].addblock(matrix[player.getcolumn() + 2].gettop(), player.getcolumn() + 2, matrix[player.getcolumn() + 1].getblock().getcolor());
+		matrix[player.getcolumn() + 1].removetopblock();
 		return false;
 	}
 
@@ -107,7 +89,8 @@ public:
 		return true;
 	}
 
-	bool hominhofall() {
+	bool hominhofall()
+	{
 		while (matrix[player.getcolumn()].gettop() != player.getline())
 		{
 			cout << "\ncolumn      : " << player.getcolumn() << endl;
@@ -118,6 +101,13 @@ public:
 		return true;
 	}
 
+	bool blockfall()
+	{
+
+		matrix[player.getcolumn() - 1].addblock(matrix[player.getcolumn()].gettop(), player.getcolumn() - 2, matrix[player.getcolumn() - 1].getblock().getcolor());
+		matrix[player.getcolumn() - 1].removetopblock();
+	}
+
 	bool hominhomovleft() {
 		if (leftoccuped()) {
 			cout << "esquerda do hominho ocupada" << endl;
@@ -126,10 +116,15 @@ public:
 				return false;
 			}
 			else {
-				cout << "esquerda do hominho ocupada mas por um bloco" << endl;
-				//blockmovleft(player.getcolumn() - 1);
-				//player.setcolumn(player.getcolumn() - 1);
-				return true;
+				if (matrix[player.getcolumn()].gettop() + 1 == matrix[player.getcolumn() - 1].gettop())
+				{
+					cout << "esquerda do hominho ocupada mas por um bloco" << endl;
+					blockmovleft();
+					player.setcolumn(player.getcolumn() - 1);
+					return true;
+				}
+				cout << "esquerda do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
+				return false;
 			}
 		}
 		else {
@@ -144,16 +139,21 @@ public:
 		if (rightoccuped())
 		{
 			cout << "direita do hominho ocupada" << endl;
-			if (blockrightoccuped())
+			if (blockrightoccuped()|| (player.getcolumn() == 8))
 			{
 				cout << "direita do hominho ocupada por dois blocos" << endl;
 				return false;
 			}
 			else {
-				cout << "direita do hominho ocupada mas por um bloco" << endl;
-				//blockmovright(player.getcolumn() + 1);
-				//player.setcolumn(player.getcolumn() + 1);
-				return true;
+				if (matrix[player.getcolumn()].gettop() + 1 == matrix[player.getcolumn() + 1].gettop())
+				{
+					cout << "direita do hominho ocupada mas por um bloco" << endl;
+					blockmovright();
+					player.setcolumn(player.getcolumn() + 1);
+					return true;
+				}
+				cout << "direita do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
+				return false;
 			}
 		}
 		else {
@@ -163,14 +163,14 @@ public:
 		}
 		return false;
 	}
-
+	/*
 	bool fall() {
 		for (int i = 0; i <= 9; i++) {
 			matrix[i].blockfall();
 		}
 		hominhofall();
 		return true;
-	}
+	}*/
 
 	/* For the character getters and setters */
 	unsigned short int getcolumn() {

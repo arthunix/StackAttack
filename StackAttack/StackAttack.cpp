@@ -20,7 +20,7 @@ bool draw_blocks(space game, ALLEGRO_BITMAP* texture)
 	for (int i = 0; i < 10; i++)
 	{
 		column currentcolumn = game.bloquinhogetline(i);
-		for (int u = 0; u < 5; u++)
+		for (int u = 0; u < 10; u++)
 		{
 			block currentblock = currentcolumn.getblock(u);
 			
@@ -65,11 +65,12 @@ int main()
 	/* Game variables and constants */
 	int contador = 0;
 	bool stop = false;
-	ALLEGRO_FONT* font = NULL;
+	ALLEGRO_FONT* fonttnr = NULL;
+	ALLEGRO_FONT* fontshowg = NULL;
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* timer = NULL;
-	ALLEGRO_BITMAP* backgound = NULL;
+	ALLEGRO_BITMAP* background = NULL;
 	ALLEGRO_BITMAP* hominho = NULL;
 	ALLEGRO_BITMAP* blockimg = NULL;
 	space gamespace;
@@ -99,16 +100,18 @@ int main()
 	/* Textures, fonts, videos and sounds loalding */
 	hominho = al_load_bitmap("objects/images/psicopattack.png");
 	blockimg = al_load_bitmap("objects/images/blocks.bmp");
-	if ((hominho == NULL) || (blockimg == NULL))
+	background = al_load_bitmap("objects/images/background.jpg");
+	if ((hominho == NULL) || (blockimg == NULL) || (background == NULL))
 	{
 		al_show_native_message_box(NULL, "Error", "Critical Error", "Unable load textures", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
-	
-	font = al_load_font("objects/fonts/tnr.ttf", 20, NULL);
-	if (font == NULL)
+
+	fonttnr = al_load_font("objects/fonts/times.ttf", 20, NULL);
+	fontshowg = al_load_font("objects/fonts/SHOWG.TTF", 20, NULL);
+	if ((fonttnr == NULL) || (fontshowg == NULL))
 	{
-		al_show_native_message_box(NULL, "Error", "Critical Error", "Unable load font", NULL, ALLEGRO_MESSAGEBOX_ERROR);
+		al_show_native_message_box(NULL, "Error", "Critical Error", "Unable load fonts", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
 	}
 
@@ -120,12 +123,13 @@ int main()
 
 	al_start_timer(timer);
 
-	gamespace.insertblock(0,0,2);
+	gamespace.insertblock(0,2,2);
 	gamespace.insertblock(0,3,4);
 	gamespace.insertblock(0,7,3);
-	gamespace.insertblock(0, 8, 6);
+	gamespace.insertblock(0, 9, 6);
 	gamespace.insertblock(0, 6, 6);
 	gamespace.insertblock(1, 7, 5);
+	gamespace.insertblock(0, 0, 3);
 
 	while (!stop)
 	{
@@ -170,13 +174,12 @@ int main()
 			stop = true;
 		}
 
-
 		/* Game drawing and drawing controller */
 		/* Game frame update */
+		al_draw_scaled_bitmap(background, 0, 0,3000, 2000, 0, 0, LENGHT_DISPLAY, HIGH_DISPLAY, NULL);
 		al_draw_bitmap(hominho, 150 + (gamespace.getcolumn()*50), (HIGH_DISPLAY-100)-(gamespace.getline()*50), NULL);
 		draw_blocks(gamespace,blockimg);
-		//al_draw_scaled_bitmap(blockimg, azul, 150 + (gamespace.bloquinhogetline(3).getblock(1).getcolumn() * 50), (high_display - 50) - (gamespace.bloquinhogetline(1).getblock(10).getline() * 50), 50, 50, NULL);
-		al_draw_textf(font, al_map_rgb(255, 255, 255), LENGHT_DISPLAY / 2, HIGH_DISPLAY / 2, ALLEGRO_ALIGN_CENTRE, "Contador: %d", al_get_timer_count(timer));
+		al_draw_textf(fontshowg, al_map_rgb(255, 255, 255), LENGHT_DISPLAY / 2, HIGH_DISPLAY / 2, ALLEGRO_ALIGN_CENTRE, "Contador: %d", al_get_timer_count(timer));
 		al_flip_display();
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 	}
@@ -184,8 +187,9 @@ int main()
 	// Free memory and game stoping
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);
-	al_destroy_font(font);
-	al_destroy_bitmap(backgound);
+	al_destroy_font(fonttnr);
+	al_destroy_font(fontshowg);
+	al_destroy_bitmap(background);
 	al_destroy_bitmap(hominho);
 	al_destroy_bitmap(blockimg);
 	al_destroy_display(display);

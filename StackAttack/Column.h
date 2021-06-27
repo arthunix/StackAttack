@@ -30,6 +30,9 @@ public:
 	block getblock(unsigned short int index) {
 		return line[index];
 	}
+	block getblock() {
+		return line[top - 1];
+	}
 
 	bool setblockcolor(unsigned short int color, unsigned short int index) {
 		line[index].setcolor(color);
@@ -107,23 +110,16 @@ public:
 		}
 		return false;
 	}
-	block removetopblock() {
+	bool removetopblock() {
 		top = top - 1;
-		return line[top];
+		line[top].setcolor(0);
+		return true;
 	}
 
-
-	/* Related to the block internal position inside the column line */
-	bool blockfall()
-	{
-		/* I think it is here we apply the gravity */
-		if (top != last) {
-			/* We still need to fall */
-			line[last].setline(line[last].getline() - 1);
-			last--;
-			return true;
-		}
-		return false;
+	bool removetopblock(unsigned short int index) {
+		top = top - 1;
+		line[index].setcolor(0);
+		return true;
 	}
 };
 
