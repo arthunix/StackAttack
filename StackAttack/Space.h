@@ -1,3 +1,12 @@
+/*
+* GAME SPACE
+* (C) 2021 Ingrid Lira dos Santos
+* (C) 2021 Arthur Eugenio Silverio
+* (C) 2021 Caroline Elisa Duarte de Souza
+*
+* StackAttack is released under the Simplified BSD License (see LICENSE)
+*/
+
 #ifndef SPACE_H
 #define	SPACE_H
 
@@ -16,8 +25,13 @@ private:
 
 public:
 	/* Here we need to initiate all itens with zero, void block is color zero? is it a good idea? */
-	space() {};
-
+	space()
+	{
+		for (int i = 0; i < 10; i++)
+		{
+			matrix[i].setcolumn(i);
+		}
+	}
 
 	/* For the block in space game management */
 	column bloquinhogetline(int index) {
@@ -73,15 +87,11 @@ public:
 	}
 	
 	bool blockmovleft() {
-		matrix[player.getcolumn() - 1].descreaselast();
-		matrix[player.getcolumn() - 2].descreaselast();
 		matrix[player.getcolumn() - 2].addblock(matrix[player.getcolumn() - 2].gettop(), player.getcolumn() - 2, matrix[player.getcolumn() - 1].getblock().getcolor());
 		matrix[player.getcolumn() - 1].removetopblock();
 		return false;
 	}
 	bool blockmovright() {
-		matrix[player.getcolumn() + 1].descreaselast();
-		matrix[player.getcolumn() + 2].descreaselast();
 		matrix[player.getcolumn() + 2].addblock(matrix[player.getcolumn() + 2].gettop(), player.getcolumn() + 2, matrix[player.getcolumn() + 1].getblock().getcolor());
 		matrix[player.getcolumn() + 1].removetopblock();
 		return false;
@@ -117,25 +127,25 @@ public:
 
 	bool hominhomovleft() {
 		if (leftoccuped()) {
-			cout << "esquerda do hominho ocupada" << endl;
+			//cout << "esquerda do hominho ocupada" << endl;
 			if (blockleftoccuped()) {
-				cout << "esquerda do hominho ocupada por dois blocos" << endl;
+				//cout << "esquerda do hominho ocupada por dois blocos" << endl;
 				return false;
 			}
 			else {
 				if (matrix[player.getcolumn()].gettop() + 1 == matrix[player.getcolumn() - 1].gettop())
 				{
-					cout << "esquerda do hominho ocupada mas por um bloco" << endl;
+					//cout << "esquerda do hominho ocupada mas por um bloco" << endl;
 					blockmovleft();
 					player.setcolumn(player.getcolumn() - 1);
 					return true;
 				}
-				cout << "esquerda do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
+				//cout << "esquerda do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
 				return false;
 			}
 		}
 		else {
-			cout << "esquerda ta livre" << endl;
+			//cout << "esquerda ta livre" << endl;
 			player.setcolumn(player.getcolumn() - 1);
 			return true;
 		}
@@ -145,39 +155,31 @@ public:
 	bool hominhomovright() {
 		if (rightoccuped())
 		{
-			cout << "direita do hominho ocupada" << endl;
+			//cout << "direita do hominho ocupada" << endl;
 			if (blockrightoccuped()|| (player.getcolumn() == 8))
 			{
-				cout << "direita do hominho ocupada por dois blocos" << endl;
+				//cout << "direita do hominho ocupada por dois blocos" << endl;
 				return false;
 			}
 			else {
 				if (matrix[player.getcolumn()].gettop() + 1 == matrix[player.getcolumn() + 1].gettop())
 				{
-					cout << "direita do hominho ocupada mas por um bloco" << endl;
+					//cout << "direita do hominho ocupada mas por um bloco" << endl;
 					blockmovright();
 					player.setcolumn(player.getcolumn() + 1);
 					return true;
 				}
-				cout << "direita do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
+				///cout << "direita do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
 				return false;
 			}
 		}
 		else {
-			cout << "direita ta livre" << endl;
+			//cout << "direita ta livre" << endl;
 			player.setcolumn(player.getcolumn() + 1);
 			return true;
 		}
 		return false;
 	}
-	/*
-	bool fall() {
-		for (int i = 0; i <= 9; i++) {
-			matrix[i].blockfall();
-		}
-		hominhofall();
-		return true;
-	}*/
 
 	/* For the character getters and setters */
 	unsigned short int getcolumn() {
@@ -193,6 +195,14 @@ public:
 	bool setline(unsigned short int line) {
 		player.setline(line);
 		return true;
+	}
+	bool gethominholife()
+	{
+		return player.getlife();
+	}
+	bool killhominho()
+	{
+		player.kill();
 	}
 };
 

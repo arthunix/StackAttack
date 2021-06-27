@@ -1,3 +1,12 @@
+/*
+* HOMINHO
+* (C) 2021 Ingrid Lira dos Santos
+* (C) 2021 Arthur Eugenio Silverio
+* (C) 2021 Caroline Elisa Duarte de Souza
+*
+* StackAttack is released under the Simplified BSD License (see LICENSE)
+*/
+
 #ifndef HOMINHO_H
 #define	HOMINHO_H
 

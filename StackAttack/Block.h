@@ -1,3 +1,12 @@
+/*
+* BLOCK
+* (C) 2021 Ingrid Lira dos Santos
+* (C) 2021 Arthur Eugenio Silverio
+* (C) 2021 Caroline Elisa Duarte de Souza
+*
+* StackAttack is released under the Simplified BSD License (see LICENSE)
+*/
+
 #ifndef BLOCK_H
 #define	BLOCK_H
 
@@ -25,8 +34,12 @@ private:
 public:
 	/* Related to the block color */
 	bool setcolor(unsigned short int color) {
-		this->color = color;
-		return true;
+		if ((color <= 6) && (color >= 0))
+		{
+			this->color = color;
+			return true;
+		}
+		return false;
 	}
 	unsigned short int getcolor() {
 		return this->color;

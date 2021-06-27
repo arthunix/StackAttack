@@ -1,3 +1,12 @@
+/*
+* STACK ATTACK
+* (C) 2021 Ingrid Lira dos Santos
+* (C) 2021 Arthur Eugenio Silverio
+* (C) 2021 Caroline Elisa Duarte de Souza
+*
+* StackAttack is released under the Simplified BSD License (see LICENSE)
+*/
+
 #include <iostream>
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
@@ -125,28 +134,10 @@ int main()
 
 	al_start_timer(timer);
 
-	gamespace.insertblock(0, 0, 1);
-	gamespace.insertblock(1, 0, 5);
-	gamespace.insertblock(2, 0, 4);
-	gamespace.insertblock(0, 1, 3);
-	gamespace.insertblock(0, 2, 3);
-	gamespace.insertblock(0, 3, 4);
-	gamespace.insertblock(0, 4, 6);
-	gamespace.insertblock(0, 6, 3);
-	gamespace.insertblock(1, 6, 3);
-	gamespace.insertblock(0, 7, 1);
-	gamespace.insertblock(1, 7, 1);
-	gamespace.insertblock(2, 7, 1);
-	gamespace.insertblock(3, 7, 1);
-	gamespace.insertblock(0, 8, 2);
-	gamespace.insertblock(1, 8, 2);
-	gamespace.insertblock(0, 9, 3);
-	//gamespace.insertblock(10, 3, 6);
-
-
 	while (!stop)
 	{
-		ALLEGRO_EVENT event;		
+		ALLEGRO_EVENT event;
+
 		al_wait_for_event(event_queue, &event);
 
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN)
@@ -162,13 +153,11 @@ int main()
 				gamespace.hominhomovright();
 				gamespace.removeallfirst();
 				gamespace.hominhofall();
-				gamespace.blockfall();
 				break;
 			case ALLEGRO_KEY_LEFT:
 				gamespace.hominhomovleft();
 				gamespace.removeallfirst();
 				gamespace.hominhofall();
-				gamespace.blockfall();
 				break;
 			case ALLEGRO_KEY_UP:
 				gamespace.removeallfirst();
@@ -181,11 +170,18 @@ int main()
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_UP:
 				gamespace.hominhofall();
-				gamespace.blockfall();
 				break;
 			}
 		}
-
+		
+		if (event.type == ALLEGRO_EVENT_TIMER)
+		{
+			gamespace.blockfall();
+			if (al_get_timer_count(timer) % 3 == 0)
+			{
+				gamespace.insertblock(rand() % 9, rand() % 6);
+			}
+		}
 
 		// Logical game space
 		if(event.type == ALLEGRO_EVENT_DISPLAY_CLOSE)
@@ -193,7 +189,6 @@ int main()
 			stop = true;
 		}
 
-		gamespace.blockfall();
 		/* Game drawing and drawing controller */
 		/* Game frame update */
 		al_draw_scaled_bitmap(background, 0, 0,3000, 2000, 0, 0, LENGHT_DISPLAY, HIGH_DISPLAY, NULL);
