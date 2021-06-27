@@ -123,13 +123,24 @@ int main()
 
 	al_start_timer(timer);
 
-	gamespace.insertblock(0,2,2);
-	gamespace.insertblock(0,3,4);
-	gamespace.insertblock(0,7,3);
-	gamespace.insertblock(0, 9, 6);
-	gamespace.insertblock(0, 6, 6);
-	gamespace.insertblock(1, 7, 5);
-	gamespace.insertblock(0, 0, 3);
+	gamespace.insertblock(0, 0, 1);
+	gamespace.insertblock(1, 0, 5);
+	gamespace.insertblock(2, 0, 4);
+	gamespace.insertblock(0, 1, 3);
+	gamespace.insertblock(0, 2, 3);
+	gamespace.insertblock(0, 3, 4);
+	gamespace.insertblock(0, 4, 6);
+	gamespace.insertblock(1, 3, 2);
+	gamespace.insertblock(0, 6, 3);
+	gamespace.insertblock(1, 6, 3);
+	gamespace.insertblock(0, 7, 1);
+	gamespace.insertblock(1, 7, 1);
+	gamespace.insertblock(2, 7, 1);
+	gamespace.insertblock(3, 7, 1);
+	gamespace.insertblock(0, 8, 2);
+	gamespace.insertblock(1, 8, 2);
+	gamespace.insertblock(0, 9, 3);
+
 
 	while (!stop)
 	{
@@ -147,13 +158,16 @@ int main()
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_RIGHT:
 				gamespace.hominhomovright();
+				gamespace.removeallfirst();
 				gamespace.hominhofall();
 				break;
 			case ALLEGRO_KEY_LEFT:
 				gamespace.hominhomovleft();
+				gamespace.removeallfirst();
 				gamespace.hominhofall();
 				break;
 			case ALLEGRO_KEY_UP:
+				gamespace.removeallfirst();
 				gamespace.hominhojump();
 				break;
 			}
@@ -179,7 +193,7 @@ int main()
 		al_draw_scaled_bitmap(background, 0, 0,3000, 2000, 0, 0, LENGHT_DISPLAY, HIGH_DISPLAY, NULL);
 		al_draw_bitmap(hominho, 150 + (gamespace.getcolumn()*50), (HIGH_DISPLAY-100)-(gamespace.getline()*50), NULL);
 		draw_blocks(gamespace,blockimg);
-		al_draw_textf(fontshowg, al_map_rgb(255, 255, 255), LENGHT_DISPLAY / 2, HIGH_DISPLAY / 2, ALLEGRO_ALIGN_CENTRE, "Contador: %d", al_get_timer_count(timer));
+		al_draw_textf(fontshowg, al_map_rgb(255, 255, 255), LENGHT_DISPLAY-10, 10, ALLEGRO_ALIGN_RIGHT, "Timer: %i", al_get_timer_count(timer));
 		al_flip_display();
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 	}

@@ -93,12 +93,13 @@ public:
 			block aux[5];
 			for (int i = 0; i < top; i++)
 			{
-				aux[i] = line[i];
+				aux[i].setcolor(line[i].getcolor());
 			}
 			for (int i = 0; i < (top - 1); i++)
 			{
-				line[i] = aux[i + 1];
+				line[i].setcolor(aux[i + 1].getcolor());
 			}
+			line[top - 1].setcolor(0);
 			top = top - 1;
 			return true;
 		}
