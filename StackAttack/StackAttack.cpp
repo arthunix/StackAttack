@@ -72,6 +72,7 @@ int main()
 	ALLEGRO_TIMER* timer = NULL;
 	ALLEGRO_BITMAP* background = NULL;
 	ALLEGRO_BITMAP* hominho = NULL;
+	ALLEGRO_BITMAP* hominhomorto = NULL;
 	ALLEGRO_BITMAP* blockimg = NULL;
 	space gamespace;
 
@@ -99,9 +100,10 @@ int main()
 
 	/* Textures, fonts, videos and sounds loalding */
 	hominho = al_load_bitmap("objects/images/psicopattack.png");
+	hominhomorto = al_load_bitmap("objects/images/psicopattackmorto.png");
 	blockimg = al_load_bitmap("objects/images/blocks.bmp");
 	background = al_load_bitmap("objects/images/background.jpg");
-	if ((hominho == NULL) || (blockimg == NULL) || (background == NULL))
+	if ((hominho == NULL) || (hominhomorto == NULL) || (blockimg == NULL) || (background == NULL))
 	{
 		al_show_native_message_box(NULL, "Error", "Critical Error", "Unable load textures", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
@@ -130,7 +132,6 @@ int main()
 	gamespace.insertblock(0, 2, 3);
 	gamespace.insertblock(0, 3, 4);
 	gamespace.insertblock(0, 4, 6);
-	gamespace.insertblock(1, 3, 2);
 	gamespace.insertblock(0, 6, 3);
 	gamespace.insertblock(1, 6, 3);
 	gamespace.insertblock(0, 7, 1);
@@ -140,6 +141,7 @@ int main()
 	gamespace.insertblock(0, 8, 2);
 	gamespace.insertblock(1, 8, 2);
 	gamespace.insertblock(0, 9, 3);
+	//gamespace.insertblock(10, 3, 6);
 
 
 	while (!stop)
@@ -160,11 +162,13 @@ int main()
 				gamespace.hominhomovright();
 				gamespace.removeallfirst();
 				gamespace.hominhofall();
+				gamespace.blockfall();
 				break;
 			case ALLEGRO_KEY_LEFT:
 				gamespace.hominhomovleft();
 				gamespace.removeallfirst();
 				gamespace.hominhofall();
+				gamespace.blockfall();
 				break;
 			case ALLEGRO_KEY_UP:
 				gamespace.removeallfirst();
@@ -177,6 +181,7 @@ int main()
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_UP:
 				gamespace.hominhofall();
+				gamespace.blockfall();
 				break;
 			}
 		}
@@ -188,6 +193,7 @@ int main()
 			stop = true;
 		}
 
+		gamespace.blockfall();
 		/* Game drawing and drawing controller */
 		/* Game frame update */
 		al_draw_scaled_bitmap(background, 0, 0,3000, 2000, 0, 0, LENGHT_DISPLAY, HIGH_DISPLAY, NULL);
@@ -205,6 +211,7 @@ int main()
 	al_destroy_font(fontshowg);
 	al_destroy_bitmap(background);
 	al_destroy_bitmap(hominho);
+	al_destroy_bitmap(hominhomorto);
 	al_destroy_bitmap(blockimg);
 	al_destroy_display(display);
 }

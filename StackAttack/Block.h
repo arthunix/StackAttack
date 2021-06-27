@@ -5,6 +5,7 @@
 class block {
 private:
 	/* It's just the atributte for color
+	* 0 for void block
 	* 1 for orange
 	* 2 for blue
 	* 3 for pink

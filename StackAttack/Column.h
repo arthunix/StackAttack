@@ -46,6 +46,12 @@ public:
 		}
 		return false;
 	}
+
+	bool descreaselast() {
+		last--;
+		return true;
+	}
+
 	unsigned short int gettop() {
 		return top;
 	}
@@ -62,7 +68,7 @@ public:
 			line[10].setcolumn(column);
 			line[10].setcolor(color);
 			last = 10;
-			top = top + 1;
+			//top = top + 1;
 			/// <Gravity considerations and new ideas>
 			/// The block starts from the above and then need to fall down
 			/// I think it is not here we will do it... but the main method
@@ -90,7 +96,7 @@ public:
 		if (top > 0)
 		{
 			// Create a column copy and then realocate
-			block aux[5];
+			block aux[11];
 			for (int i = 0; i < top; i++)
 			{
 				aux[i].setcolor(line[i].getcolor());
@@ -105,6 +111,7 @@ public:
 		}
 		return false;
 	}
+
 	bool firstoccuped() {
 		if (top > 0) {
 			return true;
@@ -119,8 +126,25 @@ public:
 
 	bool removetopblock(unsigned short int index) {
 		top = top - 1;
+		last--;
 		line[index].setcolor(0);
 		return true;
+	}
+
+	bool blockfall()
+	{
+		if (top < last)
+		{
+			std::cout << "top: " << top << std::endl;
+			std::cout << "last: " << last << std::endl;
+			line[last - 1].setcolor(line[last].getcolor());
+			line[last - 1].setline(line[last].getline() - 1);
+			line[last].setcolor(0);
+			line[last].setline(0);
+			last--;
+			return true;
+		}
+		return false;
 	}
 };
 
