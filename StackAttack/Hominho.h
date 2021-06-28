@@ -27,13 +27,9 @@ public:
 	bool getlife() {
 		return alive;
 	}
-	bool kill() {
-		// You call this method when game over
-		if (alive) {
-			alive = false;
-			return true;
-		}
-		return false;
+	bool setlife(bool life) {
+		alive = life;
+		return true;
 	}
 
 	/* Related to the character matrix control */

@@ -63,8 +63,13 @@ public:
 	* It's a pseudo-random numbers generator :( cryptography cry buá
 	*/
 	bool insertblock(unsigned short int column, unsigned short int color) {
-		matrix[column].addblock(column, color);
-		return true;
+		if ((matrix[column].gettop() == matrix[column].getlast() + 1) ||
+			(matrix[column].gettop() == matrix[column].getlast()))
+		{
+			matrix[column].addblock(column, color);
+			return true;
+		}
+		return false;
 	}
 
 	bool insertblock(unsigned short int line, unsigned short int column, unsigned short int color) {
@@ -105,11 +110,8 @@ public:
 
 	bool hominhofall()
 	{
-		while (matrix[player.getcolumn()].gettop() != player.getline())
+		while (matrix[player.getcolumn()].gettop() < player.getline())
 		{
-			cout << "\ncolumn      : " << player.getcolumn() << endl;
-			cout << "column topo : " << matrix[player.getcolumn()].gettop() << endl;
-			cout << "hominho line: " << player.getline() << endl;
 			player.setline(player.getline() - 1);
 		}
 		return true;
@@ -119,7 +121,6 @@ public:
 	{
 		for (int i = 0; i < 10; i++)
 		{
-			std::cout << "coluna: " << i << std::endl;
 			matrix[i].blockfall();
 		}
 		return true;
@@ -127,25 +128,20 @@ public:
 
 	bool hominhomovleft() {
 		if (leftoccuped()) {
-			//cout << "esquerda do hominho ocupada" << endl;
 			if (blockleftoccuped()) {
-				//cout << "esquerda do hominho ocupada por dois blocos" << endl;
 				return false;
 			}
 			else {
 				if (matrix[player.getcolumn()].gettop() + 1 == matrix[player.getcolumn() - 1].gettop())
 				{
-					//cout << "esquerda do hominho ocupada mas por um bloco" << endl;
 					blockmovleft();
 					player.setcolumn(player.getcolumn() - 1);
 					return true;
 				}
-				//cout << "esquerda do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
 				return false;
 			}
 		}
 		else {
-			//cout << "esquerda ta livre" << endl;
 			player.setcolumn(player.getcolumn() - 1);
 			return true;
 		}
@@ -155,26 +151,21 @@ public:
 	bool hominhomovright() {
 		if (rightoccuped())
 		{
-			//cout << "direita do hominho ocupada" << endl;
 			if (blockrightoccuped()|| (player.getcolumn() == 8))
 			{
-				//cout << "direita do hominho ocupada por dois blocos" << endl;
 				return false;
 			}
 			else {
 				if (matrix[player.getcolumn()].gettop() + 1 == matrix[player.getcolumn() + 1].gettop())
 				{
-					//cout << "direita do hominho ocupada mas por um bloco" << endl;
 					blockmovright();
 					player.setcolumn(player.getcolumn() + 1);
 					return true;
 				}
-				///cout << "direita do hominho ocupada mas por um bloco mas nem da pra empurrar" << endl;
 				return false;
 			}
 		}
 		else {
-			//cout << "direita ta livre" << endl;
 			player.setcolumn(player.getcolumn() + 1);
 			return true;
 		}
@@ -196,13 +187,19 @@ public:
 		player.setline(line);
 		return true;
 	}
+
+	bool sethominholife()
+	{
+		if (matrix[player.getcolumn()].getlast() == (player.getline() + 1))
+		{
+			player.setlife(false);
+			return true;
+		}
+		return true;
+	}
 	bool gethominholife()
 	{
 		return player.getlife();
-	}
-	bool killhominho()
-	{
-		player.kill();
 	}
 };
 

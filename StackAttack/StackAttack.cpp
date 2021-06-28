@@ -32,11 +32,6 @@ bool draw_blocks(space game, ALLEGRO_BITMAP* texture)
 		for (int u = 0; u < 10; u++)
 		{
 			block currentblock = currentcolumn.getblock(u);
-			
-			/*cout << "\ncoluna: " << i << endl;
-			cout << "linha   : " << u << endl;
-			cout << "cor     : " << currentblock.getcolor() << endl;*/
-
 			if (currentblock.getcolor() != 0)
 			{
 				switch (currentblock.getcolor())
@@ -69,13 +64,16 @@ bool draw_blocks(space game, ALLEGRO_BITMAP* texture)
 	return true;
 }
 
-int main()
+int game()
 {
 	/* Game variables and constants */
 	int contador = 0;
+	int score = 0;
 	bool stop = false;
+	bool restart = false;
 	ALLEGRO_FONT* fonttnr = NULL;
-	ALLEGRO_FONT* fontshowg = NULL;
+	ALLEGRO_FONT* fontshowg20 = NULL;
+	ALLEGRO_FONT* fontshowg100 = NULL;
 	ALLEGRO_DISPLAY* display = NULL;
 	ALLEGRO_EVENT_QUEUE* event_queue = NULL;
 	ALLEGRO_TIMER* timer = NULL;
@@ -119,8 +117,9 @@ int main()
 	}
 
 	fonttnr = al_load_font("objects/fonts/times.ttf", 20, NULL);
-	fontshowg = al_load_font("objects/fonts/SHOWG.TTF", 20, NULL);
-	if ((fonttnr == NULL) || (fontshowg == NULL))
+	fontshowg20 = al_load_font("objects/fonts/SHOWG.TTF", 20, NULL);
+	fontshowg100 = al_load_font("objects/fonts/SHOWG.TTF", 100, NULL);
+	if ((fonttnr == NULL) || (fontshowg20 == NULL) || (fontshowg100 == NULL))
 	{
 		al_show_native_message_box(NULL, "Error", "Critical Error", "Unable load fonts", NULL, ALLEGRO_MESSAGEBOX_ERROR);
 		return -1;
@@ -142,9 +141,14 @@ int main()
 
 		if (event.type == ALLEGRO_EVENT_KEY_DOWN)
 		{
-			if (event.keyboard.keycode == ALLEGRO_KEY_ENTER) {};
 			if (event.keyboard.keycode == ALLEGRO_KEY_ESCAPE)
 			{
+				stop = true;
+			}
+			if (event.keyboard.keycode == ALLEGRO_KEY_SPACE)
+			{
+				// Space for restart game
+				restart = true;
 				stop = true;
 			}
 
@@ -174,13 +178,17 @@ int main()
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			gamespace.blockfall();
+			gamespace.sethominholife();
 			if (al_get_timer_count(timer) % 2 == 0)
 			{
 				int color = rand() % 7;
 				if (color != 0)
 					gamespace.insertblock(rand() % 10, color);
 			}
-			gamespace.removeallfirst();
+			if (gamespace.removeallfirst())
+			{
+				score = score + 100;
+			}
 		}
 
 		// Logical game space
@@ -191,10 +199,24 @@ int main()
 
 		/* Game drawing and drawing controller */
 		/* Game frame update */
-		al_draw_scaled_bitmap(background, 0, 0,3000, 2000, 0, 0, LENGHT_DISPLAY, HIGH_DISPLAY, NULL);
+		al_draw_scaled_bitmap(background, 0, 0,al_get_bitmap_width(background), al_get_bitmap_height(background), 0, 0, LENGHT_DISPLAY, HIGH_DISPLAY, NULL);
 		al_draw_bitmap(hominho, 150 + (gamespace.getcolumn()*50), (HIGH_DISPLAY-100)-(gamespace.getline()*50), NULL);
 		draw_blocks(gamespace,blockimg);
-		al_draw_textf(fontshowg, al_map_rgb(255, 255, 255), LENGHT_DISPLAY-10, 10, ALLEGRO_ALIGN_RIGHT, "Timer: %i", al_get_timer_count(timer));
+		if (!gamespace.gethominholife())
+		{
+			al_draw_bitmap(hominhomorto, 150 + (gamespace.getcolumn() * 50), (HIGH_DISPLAY - 100) - (gamespace.getline() * 50), NULL);
+			al_draw_text(fontshowg100, al_map_rgb(255, 255, 255), LENGHT_DISPLAY / 2, (HIGH_DISPLAY / 2) - 50, ALLEGRO_ALIGN_CENTER, "GAME OVER");
+			al_draw_text(fontshowg20, al_map_rgb(255, 255, 255), LENGHT_DISPLAY / 2, (HIGH_DISPLAY / 2) + 45, ALLEGRO_ALIGN_CENTER, "Press space to restart");
+			al_stop_timer(timer);
+		}
+		al_draw_textf(fontshowg20, al_map_rgb(255, 255, 255), LENGHT_DISPLAY - 10, 10, ALLEGRO_ALIGN_RIGHT, "Timer: %i", al_get_timer_count(timer));
+		al_draw_textf(fontshowg20, al_map_rgb(255, 255, 255), LENGHT_DISPLAY - 10, 30, ALLEGRO_ALIGN_RIGHT, "Life: %i", gamespace.gethominholife());
+		al_draw_textf(fontshowg20, al_map_rgb(255, 255, 255), LENGHT_DISPLAY - 10, 50, ALLEGRO_ALIGN_RIGHT, "Score: %i", score);
+		al_draw_text(fontshowg20, al_map_rgb(255, 255, 255), 0, 10, ALLEGRO_ALIGN_LEFT, "Left: LEFT KEY");
+		al_draw_text(fontshowg20, al_map_rgb(255, 255, 255), 0, 30, ALLEGRO_ALIGN_LEFT, "Right: RIGHT KEY");
+		al_draw_text(fontshowg20, al_map_rgb(255, 255, 255), 0, 50, ALLEGRO_ALIGN_LEFT, "Jump: UP KEY");
+		al_draw_text(fontshowg20, al_map_rgb(255, 255, 255), 0, 70, ALLEGRO_ALIGN_LEFT, "Close: ESC");
+		al_draw_text(fontshowg20, al_map_rgb(255, 255, 255), 0, 90, ALLEGRO_ALIGN_LEFT, "Restart: Space");
 		al_flip_display();
 		al_clear_to_color(al_map_rgb(0, 0, 0));
 	}
@@ -203,10 +225,19 @@ int main()
 	al_destroy_event_queue(event_queue);
 	al_destroy_timer(timer);
 	al_destroy_font(fonttnr);
-	al_destroy_font(fontshowg);
+	al_destroy_font(fontshowg20);
+	al_destroy_font(fontshowg100);
 	al_destroy_bitmap(background);
 	al_destroy_bitmap(hominho);
 	al_destroy_bitmap(hominhomorto);
 	al_destroy_bitmap(blockimg);
 	al_destroy_display(display);
+
+	return restart;
+}
+
+int main()
+{
+	bool gameover = false;
+	do {} while (game());
 }

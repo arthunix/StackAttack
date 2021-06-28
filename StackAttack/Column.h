@@ -140,7 +140,7 @@ public:
 		if (!fullcolumn()) {
 			// The block starts from the above, the fall from it
 			line[l].setcolor(color);
-			top = top + 1;
+			increasetop();
 			return true;
 		}
 		return false;
@@ -188,16 +188,12 @@ public:
 
 	bool blockfall()
 	{
-		if (top < last)
+		if (top < getlast())
 		{
-			std::cout << "top: " << top << std::endl;
-			std::cout << "last: " << last << std::endl;
-			std::cout << "color    : " << line[last].getcolor() << std::endl;
-			std::cout << "color - 1: " << line[last - 1].getcolor() << std::endl;
-			line[last - 1].setcolor(line[last].getcolor());
-			line[last].setcolor(0);
+			line[getlast() - 1].setcolor(line[getlast()].getcolor());
+			line[getlast()].setcolor(0);
 			descreaselast();
-			if (top == last)
+			if (top == getlast())
 			{
 				increasetop();
 			}
