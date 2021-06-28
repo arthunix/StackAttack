@@ -67,6 +67,7 @@ public:
 			this->column = column;
 			return true;
 		}
+		return false;
 	}
 
 	unsigned short int getcolumn()

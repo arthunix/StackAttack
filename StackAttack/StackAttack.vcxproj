@@ -75,6 +75,13 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
+    <Allegro_AddonImage>true</Allegro_AddonImage>
+    <Allegro_AddonTTF>true</Allegro_AddonTTF>
+    <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
+    <Allegro_AddonDialog>true</Allegro_AddonDialog>
+    <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
+    <Allegro_AddonFont>true</Allegro_AddonFont>
+    <Allegro_AddonColor>true</Allegro_AddonColor>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
@@ -94,12 +101,16 @@
     <Allegro_AddonImage>true</Allegro_AddonImage>
     <Allegro_AddonTTF>true</Allegro_AddonTTF>
     <Allegro_AddonPrimitives>true</Allegro_AddonPrimitives>
-    <Allegro_AddonAcodec>true</Allegro_AddonAcodec>
+    <Allegro_AddonAcodec>
+    </Allegro_AddonAcodec>
     <Allegro_AddonDialog>true</Allegro_AddonDialog>
     <Allegro_AddonMemfile>true</Allegro_AddonMemfile>
     <Allegro_AddonFont>true</Allegro_AddonFont>
     <Allegro_AddonColor>true</Allegro_AddonColor>
-    <Allegro_AddonVideo>true</Allegro_AddonVideo>
+    <Allegro_AddonVideo>
+    </Allegro_AddonVideo>
+    <Allegro_AddonAudio>
+    </Allegro_AddonAudio>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -164,6 +175,7 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Column.h" />
     <ClInclude Include="Hominho.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Space.h" />
   </ItemGroup>
   <ItemGroup>
@@ -172,8 +184,12 @@
   <ItemGroup>
     <Image Include="objects\images\background.jpg" />
     <Image Include="objects\images\blocks.bmp" />
+    <Image Include="objects\images\icone.ico" />
     <Image Include="objects\images\psicopattack.bmp" />
     <Image Include="objects\images\psicopattackmorto.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="StackAttack.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
