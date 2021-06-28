@@ -41,6 +41,7 @@ public:
 		}
 		return false;
 	}
+
 	unsigned short int getcolor() {
 		return this->color;
 	}
@@ -49,18 +50,27 @@ public:
 
 	/* For the line control */
 	bool setline(unsigned short int line) {
-		this->line = line;
+		if ((line <= 10) && (line >= 0)) {
+			this->line = line;
+		}
 		return true;
 	}
 	unsigned short int getline() {
 		return line;
 	}
+
 	/*For the column control*/
-	bool setcolumn(unsigned short int column) {
-		this->column = column;
-		return true;
+	bool setcolumn(unsigned short int column)
+	{
+		if ((column <= 9) && (column >= 0))
+		{
+			this->column = column;
+			return true;
+		}
 	}
-	unsigned short int getcolumn() {
+
+	unsigned short int getcolumn()
+	{
 		return column;
 	}
 };

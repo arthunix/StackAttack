@@ -12,7 +12,6 @@
 
 #define LENGHT_DISPLAY 800
 #define HIGH_DISPLAY 600
-#define GRAVITY_VELOCITY 10
 
 #include "Block.h"
 
@@ -43,39 +42,41 @@ public:
 		top = 0;
 	} // initiate a void column
 
-	/* Return the block instance, you can chose the top (without parameter) or a indexed*/
-	block getblock(unsigned short int index) {
-		return line[index];
-	}
-
-	block getblock() {
-		return line[top - 1];
-	}
-
 	/* Getters and setters */
-	bool setblockcolor(unsigned short int color, unsigned short int index) {
-		line[index].setcolor(color);
-		return true;
-	}
-
+	/* Set the top block it should be  0 if is a void column and increase 1 */
 	bool settop(unsigned short int top) {
-		if ((top >= 0)&&(top <= 5)) {
+		if ((top >= 0) && (top <= 5)) {
 			this->top = top;
 			return true;
 		}
 		return false;
 	}
 
+	/* It should be  0 if it is a void column and store as a register the index of the last added block */
 	bool setlast(unsigned short int last) {
-		if ((last >= 0)&&(last <= 10)) {
+		if ((last >= 0) && (last <= 10)) {
 			this->last = last;
 			return true;
 		}
 		return false;
 	}
 
+	bool setblock(unsigned short int index, unsigned short int color) {
+		line[index].setcolor(color);
+		return true;
+	}
+
+	/* Return the block instance, you can chose the top (without parameter) or a indexed*/
+	block getblock(unsigned short int index) {
+		return line[index];
+	}
+
+	block gettopblock() {
+		return line[top - 1];
+	}
+
 	unsigned short int getlast() {
-		return top;
+		return last;
 	}
 
 	unsigned short int gettop() {
@@ -92,8 +93,23 @@ public:
 		return true;
 	}
 
+	bool increasetop() {
+		settop(gettop() + 1);
+		return true;
+	}
+
+	bool increaselast() {
+		setlast(getlast() + 1);
+		return true;
+	}
+
+	bool descreasetop() {
+		settop(gettop() - 1);
+		return true;
+	}
+
 	bool descreaselast() {
-		last--;
+		setlast(getlast() - 1);
 		return true;
 	}
 
@@ -103,14 +119,12 @@ public:
 		}
 		return false;
 	}
+
 	bool addblock(unsigned short int column, unsigned short int color) {
 		if (!fullcolumn()) {
 			// The block starts from the above, the fall from it
-			line[10].setline(10);
-			line[10].setcolumn(column);
 			line[10].setcolor(color);
-			last = 10;
-			//top = top + 1;
+			setlast(10);
 			/// <Gravity considerations and new ideas>
 			/// The block starts from the above and then need to fall down
 			/// I think it is not here we will do it... but the main method
@@ -125,10 +139,7 @@ public:
 	bool addblock(unsigned short int l, unsigned short int column, unsigned short int color) {
 		if (!fullcolumn()) {
 			// The block starts from the above, the fall from it
-			line[l].setline(l);
-			line[l].setcolumn(column);
 			line[l].setcolor(color);
-			last = l;
 			top = top + 1;
 			return true;
 		}
@@ -138,17 +149,18 @@ public:
 		if (top > 0)
 		{
 			// Create a column copy and then realocate
-			block aux[5];
-			for (int i = 0; i < top; i++)
+			block aux[12];
+			for (int i = 0; i < 10; i++)
 			{
 				aux[i].setcolor(line[i].getcolor());
 			}
-			for (int i = 0; i < (top - 1); i++)
+			for (int i = 0; i < 9; i++)
 			{
 				line[i].setcolor(aux[i + 1].getcolor());
 			}
 			line[top - 1].setcolor(0);
-			top = top - 1;
+			descreaselast();
+			descreasetop();
 			return true;
 		}
 		return false;
@@ -160,15 +172,16 @@ public:
 		}
 		return false;
 	}
+
 	bool removetopblock() {
-		top = top - 1;
+		descreasetop();
 		line[top].setcolor(0);
 		return true;
 	}
 
-	bool removetopblock(unsigned short int index) {
-		top = top - 1;
-		last--;
+	bool removeblock(unsigned short int index) {
+		descreasetop();
+		descreaselast();
 		line[index].setcolor(0);
 		return true;
 	}
@@ -177,16 +190,16 @@ public:
 	{
 		if (top < last)
 		{
-			//std::cout << "top: " << top << std::endl;
-			//std::cout << "last: " << last << std::endl;
+			std::cout << "top: " << top << std::endl;
+			std::cout << "last: " << last << std::endl;
+			std::cout << "color    : " << line[last].getcolor() << std::endl;
+			std::cout << "color - 1: " << line[last - 1].getcolor() << std::endl;
 			line[last - 1].setcolor(line[last].getcolor());
-			line[last - 1].setline(line[last].getline() - 1);
 			line[last].setcolor(0);
-			line[last].setline(0);
-			last--;
+			descreaselast();
 			if (top == last)
 			{
-				top++;
+				increasetop();
 			}
 			return true;
 		}

@@ -98,7 +98,7 @@ int main()
 		return -1;
 	}
 
-	timer = al_create_timer(1.0);
+	timer = al_create_timer(1.0 / 2);
 
 	/* Devicesand addons initialization */
 	al_install_keyboard();
@@ -151,16 +151,13 @@ int main()
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_RIGHT:
 				gamespace.hominhomovright();
-				gamespace.removeallfirst();
 				gamespace.hominhofall();
 				break;
 			case ALLEGRO_KEY_LEFT:
 				gamespace.hominhomovleft();
-				gamespace.removeallfirst();
 				gamespace.hominhofall();
 				break;
 			case ALLEGRO_KEY_UP:
-				gamespace.removeallfirst();
 				gamespace.hominhojump();
 				break;
 			}
@@ -177,10 +174,13 @@ int main()
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
 			gamespace.blockfall();
-			if (al_get_timer_count(timer) % 3 == 0)
+			if (al_get_timer_count(timer) % 2 == 0)
 			{
-				gamespace.insertblock(rand() % 9, rand() % 6);
+				int color = rand() % 7;
+				if (color != 0)
+					gamespace.insertblock(rand() % 10, color);
 			}
+			gamespace.removeallfirst();
 		}
 
 		// Logical game space

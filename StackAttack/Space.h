@@ -87,12 +87,12 @@ public:
 	}
 	
 	bool blockmovleft() {
-		matrix[player.getcolumn() - 2].addblock(matrix[player.getcolumn() - 2].gettop(), player.getcolumn() - 2, matrix[player.getcolumn() - 1].getblock().getcolor());
+		matrix[player.getcolumn() - 2].addblock(matrix[player.getcolumn() - 2].gettop(), player.getcolumn() - 2, matrix[player.getcolumn() - 1].gettopblock().getcolor());
 		matrix[player.getcolumn() - 1].removetopblock();
 		return false;
 	}
 	bool blockmovright() {
-		matrix[player.getcolumn() + 2].addblock(matrix[player.getcolumn() + 2].gettop(), player.getcolumn() + 2, matrix[player.getcolumn() + 1].getblock().getcolor());
+		matrix[player.getcolumn() + 2].addblock(matrix[player.getcolumn() + 2].gettop(), player.getcolumn() + 2, matrix[player.getcolumn() + 1].gettopblock().getcolor());
 		matrix[player.getcolumn() + 1].removetopblock();
 		return false;
 	}
