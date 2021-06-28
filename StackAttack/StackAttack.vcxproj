@@ -184,7 +184,6 @@
     <ClInclude Include="Block.h" />
     <ClInclude Include="Column.h" />
     <ClInclude Include="Hominho.h" />
-    <ClInclude Include="resource1.h" />
     <ClInclude Include="Space.h" />
   </ItemGroup>
   <ItemGroup>
