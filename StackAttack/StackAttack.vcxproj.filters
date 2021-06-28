@@ -32,7 +32,7 @@
     <ClInclude Include="Space.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="resource.h">
+    <ClInclude Include="resource1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
