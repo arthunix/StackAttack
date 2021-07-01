@@ -15,7 +15,35 @@ Released under BSD 2-Clause "Simplified" License
 
 # Process of compilation on:
 - Unix/Posix:
+0. Fix dependencies
+```bash
+$ pkg install devel/allegro5
+$ pkg install allegro5
+```
+1. Clone repository and enter folder
+```bash
+$ git clone https://github.com/thursilverio/StackAttack.git
+$ cd StackAttack
+```
+2. Create build directory and cmake
+```bash
+$ mkdir build
+$ cd build
+$ cmake ..
+$ make
+```
+3. Copy to source folder, delete build directory and enjoy
+```bash
+$ cp StackAttack ..
+$ cd ..
+$ rm -rf build
+```
 
 - Windows:
-
-- Mac OSX:
+1. Download zip source code
+2. Open with Visual Studio
+3. Right click in the project
+4. Manage NuGet Packages
+5. Find and install Allegro5
+6. Link library and addons
+7. Compile and Enjoy
