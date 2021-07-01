@@ -4,7 +4,6 @@
 #  ALLEGRO_INCLUDE_DIR - where to find allegro.h, etc.
 #  ALLEGRO_LIBRARIES   - List of libraries when using allegro.
 #  ALLEGRO_FOUND       - True if allegro found.
-
 find_package(PkgConfig)
 
 # Find main allegro and assume the rest is there too

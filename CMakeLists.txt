@@ -22,5 +22,5 @@ include_directories(${ALLEGRO_INCLUDE_DIR})
 include_directories("${PROJECT_SOURCE_DIR}")
 
 # Finally config the executable output and source code files and link the library files
-add_executable(StackAttack StackAttack.cpp Block.h Column.h Hominho.h Space.h)
+add_executable(StackAttack StackAttack/StackAttack.cpp StackAttack/Block.h StackAttack/Column.h StackAttack/Hominho.h StackAttack/Space.h)
 target_link_libraries(${PROJECT_NAME} ${ALLEGRO_LIBRARIES})
