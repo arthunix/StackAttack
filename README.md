@@ -34,7 +34,7 @@ $ make
 ```
 3. Copy to source folder, delete build directory and enjoy
 ```bash
-$ cp StackAttack ..
+$ cp StackAttack ../StackAttack
 $ cd ..
 $ rm -rf build
 ```
