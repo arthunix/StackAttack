@@ -19,7 +19,7 @@ public:
 	unsigned short getTop();
 	void insertBlock(unsigned short p_Color);
 	void insertBlock(unsigned short p_Color, unsigned short p_Line);
-	bool IsThatColumnFull();
+	bool isThatColumnFull();
 	unsigned short getBlockColor(unsigned short p_Line);
 	void flushTheFirstBlock();
 	void columnCallGravity();
@@ -49,7 +49,7 @@ void Stack<sizeOfTheStack>::setTop(unsigned short p_Top)
 template<int sizeOfTheStack>
 unsigned short Stack<sizeOfTheStack>::getTop()
 {
-	return m_Top == (sizeOfTheStack) / 2;
+	return m_Top;
 }
 
 template<int sizeOfTheStack>
@@ -74,9 +74,9 @@ void Stack<sizeOfTheStack>::insertBlock(unsigned short p_Color, unsigned short p
 }
 
 template<int sizeOfTheStack>
-inline bool Stack<sizeOfTheStack>::IsThatColumnFull()
+inline bool Stack<sizeOfTheStack>::isThatColumnFull()
 {
-	return m_Top == sizeOfTheStack;
+	return m_Top == (sizeOfTheStack / 2);
 }
 
 template<int sizeOfTheStack>
@@ -97,7 +97,7 @@ inline void Stack<sizeOfTheStack>::flushTheFirstBlock()
 	std::copy(std::begin(m_Column), std::end(m_Column), std::begin(internAuxiliarColumn));
 	std::copy(std::begin(internAuxiliarColumn) + 1, std::end(internAuxiliarColumn), std::begin(m_Column));
 
-	setTop(getTop() - 1);
+	m_Top -= 1;
 }
 
 template<int sizeOfTheStack>
@@ -111,7 +111,7 @@ inline void Stack<sizeOfTheStack>::columnCallGravity()
 			m_Column[iteratorForColumn] = newBlockVoidBlock;
 			if ((iteratorForColumn - 1) == m_Top)
 			{
-				setTop(getTop() + 1);
+				m_Top += 1;
 			}
 		}
 	}

@@ -16,18 +16,17 @@ private:
 	bool canImoveABlockToTheLeftColumn(unsigned short);
 	bool canImoveABlockToTheRightColumn(unsigned short);
 	bool areTheFirstBlocksOccupedAtAllTheColumns();
-	void InsertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color);
+	void insertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color);
 public:
 	Game();
 	~Game();
-	void InsertBlockAtTheColumn(unsigned short p_Color, unsigned short p_Column);
+	void insertBlockAtTheColumn(unsigned short p_Color, unsigned short p_Column);
 	unsigned short GetBlockColor(unsigned short p_Column, unsigned short p_Line);
 	bool flushAllFirstElementsInEachColumn();
 	void movePlayerLeft();
 	void movePlayerRight();
-	void PlayerJump();
-	void CallGravity();
-	void PlayerFall();
+	void playerJump();
+	void callGravity();
 	bool checkPlayerLife();
 	unsigned short getPlayerPositionColumn();
 	unsigned short getPlayerPositionLine();
@@ -61,14 +60,17 @@ template<int sizeOfTheStack, int numberOfStacks>
 inline bool Game<sizeOfTheStack, numberOfStacks>::areTheFirstBlocksOccupedAtAllTheColumns()
 {
 	for (int itrEachColumn = 0; itrEachColumn < numberOfStacks; itrEachColumn++)
+	{
 		if (m_Columns[itrEachColumn].getTop() <= 0)
+		{
 			return false;
-
+		}
+	}
 	return true;
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
-inline void Game<sizeOfTheStack, numberOfStacks>::InsertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color)
+inline void Game<sizeOfTheStack, numberOfStacks>::insertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color)
 {
 	if (((0 <= p_Column) && (p_Column < numberOfStacks)) 
 		&& ((0 <= p_Line) && (p_Line < sizeOfTheStack)) 
@@ -89,7 +91,7 @@ Game<sizeOfTheStack, numberOfStacks>::~Game()
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
-inline void Game<sizeOfTheStack, numberOfStacks>::InsertBlockAtTheColumn(unsigned short p_Color, unsigned short p_Column)
+inline void Game<sizeOfTheStack, numberOfStacks>::insertBlockAtTheColumn(unsigned short p_Color, unsigned short p_Column)
 {
 	if (((0 <= p_Column) && (p_Column < numberOfStacks))
 		&& ((MIN_VALID_COLOR <= p_Color) && (p_Color <= MAX_VALID_COLOR)))
@@ -123,9 +125,22 @@ inline bool Game<sizeOfTheStack, numberOfStacks>::flushAllFirstElementsInEachCol
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
-inline void Game<sizeOfTheStack, numberOfStacks>::PlayerJump()
+inline void Game<sizeOfTheStack, numberOfStacks>::playerJump()
 {
 	m_Player.MoveMeUp();
+}
+
+template<int sizeOfTheStack, int numberOfStacks>
+inline void Game<sizeOfTheStack, numberOfStacks>::callGravity()
+{
+	for (int itrEachColumn = 0; itrEachColumn < numberOfStacks; itrEachColumn++)
+	{
+		m_Columns[itrEachColumn].columnCallGravity();
+	}
+	if (m_Player.getInWhatLineAmI() > m_Columns[m_Player.getInWhatColumnAmI()].getTop())
+	{
+		m_Player.MoveMeDown();
+	}
 }
 
 template<int sizeOfTheStack, int numberOfStacks>

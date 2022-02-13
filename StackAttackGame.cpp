@@ -144,14 +144,14 @@ int StackAttack()
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_RIGHT:
 				//gamespace.hominhomovright();
-				//gamespace.hominhofall();
+				//gamespace.callGravity();
 				break;
 			case ALLEGRO_KEY_LEFT:
 				//gamespace.hominhomovleft();
-				//gamespace.hominhofall();
+				//gamespace.callGravity();
 				break;
 			case ALLEGRO_KEY_UP:
-				gamespace.PlayerJump();
+				gamespace.playerJump();
 				break;
 			}
 		}
@@ -170,8 +170,13 @@ int StackAttack()
 			//gamespace.sethominholife();
 			if (al_get_timer_count(timer) % 2 == 0)
 			{
-				int color = rand() % 7;
-				//if (color != 0) gamespace.insertblock(rand() % 10, color);
+				gamespace.callGravity();
+				int newColorOfTheInsertedBlock = rand() % 7;
+				int newColumnOfTheInsertedBlock = rand() % 10;
+				if (newColorOfTheInsertedBlock != BLOCK_INACTIVE)
+				{
+					gamespace.insertBlockAtTheColumn(newColorOfTheInsertedBlock, newColumnOfTheInsertedBlock);
+				}
 			}
 			if (gamespace.flushAllFirstElementsInEachColumn())
 			{
