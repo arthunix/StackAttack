@@ -15,47 +15,60 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="StackAttack.cpp">
+    <ClCompile Include="StackAttackGame.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Block.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Player.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Block.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Column.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Hominho.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Space.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="packages.config" />
+    <None Include="LICENSE" />
+    <None Include="README.md" />
   </ItemGroup>
   <ItemGroup>
-    <Image Include="objects\images\blocks.bmp">
+    <ClInclude Include="include\Block.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Game.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Font Include="resources\fonts\SHOWG.TTF" />
+    <Font Include="resources\fonts\times.ttf" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="resources\images\background.jpg">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="objects\images\psicopattack.bmp">
+    <Image Include="resources\images\blocks.bmp">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="objects\images\background.jpg">
+    <Image Include="resources\images\icone.ico">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="objects\images\psicopattackmorto.png">
+    <Image Include="resources\images\psicopattack.png">
       <Filter>Resource Files</Filter>
     </Image>
-    <Image Include="objects\images\icone.ico">
+    <Image Include="resources\images\psicopattackmorto.png">
       <Filter>Resource Files</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <ResourceCompile Include="StackAttack.rc">
-      <Filter>Resource Files</Filter>
-    </ResourceCompile>
+    <Text Include="resources\images\LICENSE for background.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="resources\sounds\EricSkiffANightOfDizzySpells.mp3" />
   </ItemGroup>
 </Project>
