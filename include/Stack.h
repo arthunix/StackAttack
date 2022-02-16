@@ -19,6 +19,7 @@ public:
 	unsigned short getTop();
 	void insertBlock(unsigned short p_Color);
 	void insertBlock(unsigned short p_Color, unsigned short p_Line);
+	unsigned int removeTopBlock();
 	bool isThatColumnFull();
 	unsigned short getBlockColor(unsigned short p_Line);
 	void flushTheFirstBlock();
@@ -71,6 +72,20 @@ void Stack<sizeOfTheStack>::insertBlock(unsigned short p_Color, unsigned short p
 			m_Column[sizeOfTheStack - 1].setColor(p_Color);
 		}
 	}
+}
+
+template<int sizeOfTheStack>
+inline unsigned int Stack<sizeOfTheStack>::removeTopBlock()
+{
+	unsigned int returnValue;
+	if (m_Top > 0)
+	{
+		returnValue = m_Column[m_Top - 1].getColor();
+		m_Column[m_Top - 1].setColor(BLOCK_INACTIVE);
+		m_Top -= 1;
+	}
+
+	return returnValue;
 }
 
 template<int sizeOfTheStack>

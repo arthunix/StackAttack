@@ -10,7 +10,7 @@ template<int sizeOfTheStack, int numberOfStacks>
 class Game {
 private:
 	Stack<sizeOfTheStack> m_Columns[numberOfStacks];
-	Player m_Player = { numberOfStacks /2, 0 };
+	Player<numberOfStacks> m_Player = { numberOfStacks /2, 0 };
 	bool isTheLeftOccupedByABlockOrNot(unsigned short);
 	bool isTheRightOccupedByABlockOrNot(unsigned short);
 	bool canImoveABlockToTheLeftColumn(unsigned short);
@@ -30,10 +30,11 @@ public:
 	bool checkPlayerLife();
 	unsigned short getPlayerPositionColumn();
 	unsigned short getPlayerPositionLine();
+	void playerFallForever();
 };
 
 template<int sizeOfTheStack, int numberOfStacks>
-inline bool Game<sizeOfTheStack, numberOfStacks>::isTheLeftOccupedByABlockOrNot(unsigned short Column)
+inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheLeftColumn(unsigned short Column)
 {
 	if (Column == 0) {
 		return true;
@@ -45,9 +46,9 @@ inline bool Game<sizeOfTheStack, numberOfStacks>::isTheLeftOccupedByABlockOrNot(
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
-inline bool Game<sizeOfTheStack, numberOfStacks>::isTheRightOccupedByABlockOrNot(unsigned short Column)
+inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheRightColumn(unsigned short Column)
 {
-	if (Column == numberOfStacks - 1) {
+	if (Column >= numberOfStacks - 1) {
 		return true;
 	}
 	if ((0 <= Column) && (Column < numberOfStacks)) {
@@ -55,6 +56,18 @@ inline bool Game<sizeOfTheStack, numberOfStacks>::isTheRightOccupedByABlockOrNot
 	}
 	return false;
 }
+
+/*template<int sizeOfTheStack, int numberOfStacks>
+inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheLeftColumn(unsigned short Column)
+{
+	return !isTheLeftOccupedByABlockOrNot(Column - 1);
+}
+
+template<int sizeOfTheStack, int numberOfStacks>
+inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheRightColumn(unsigned short Column)
+{
+	return !isTheRightOccupedByABlockOrNot(Column + 1);
+}*/
 
 template<int sizeOfTheStack, int numberOfStacks>
 inline bool Game<sizeOfTheStack, numberOfStacks>::areTheFirstBlocksOccupedAtAllTheColumns()
@@ -77,6 +90,15 @@ inline void Game<sizeOfTheStack, numberOfStacks>::insertBlockAtTheColumn(unsigne
 		&& ((MIN_VALID_COLOR <= p_Color) && (p_Color <= MAX_VALID_COLOR)))
 	{
 		m_Columns[p_Column].insertBlock(p_Color, p_Line);
+	}
+}
+
+template<int sizeOfTheStack, int numberOfStacks>
+inline void Game<sizeOfTheStack, numberOfStacks>::playerFallForever()
+{
+	while(m_Player.getInWhatLineAmI() > m_Columns[m_Player.getInWhatColumnAmI()].getTop())
+	{
+		m_Player.MoveMeDown();
 	}
 }
 
@@ -120,8 +142,35 @@ inline bool Game<sizeOfTheStack, numberOfStacks>::flushAllFirstElementsInEachCol
 		{
 			m_Columns[itrEachColumn].flushTheFirstBlock();
 		}
+		return true;
 	}
 	return false;
+}
+
+template<int sizeOfTheStack, int numberOfStacks>
+inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerLeft()
+{
+	m_Player.MoveMeLeft();
+}
+
+template<int sizeOfTheStack, int numberOfStacks>
+inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerRight()
+{
+	//m_Player.MoveMeRight();
+
+	if (m_Player.getInWhatLineAmI() >= m_Columns[m_Player.getInWhatColumnAmI()+1].getTop())
+	{
+		m_Player.MoveMeRight();
+		std::cout << "mov right 1" << std::endl;
+	}
+	else
+	{
+		//unsigned int playerColumn;
+		if (canImoveABlockToTheRightColumn(m_Player.getInWhatColumnAmI()+1))
+		{
+			std::cout << "mov right 2" << std::endl;
+		}
+	}
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
@@ -136,10 +185,6 @@ inline void Game<sizeOfTheStack, numberOfStacks>::callGravity()
 	for (int itrEachColumn = 0; itrEachColumn < numberOfStacks; itrEachColumn++)
 	{
 		m_Columns[itrEachColumn].columnCallGravity();
-	}
-	if (m_Player.getInWhatLineAmI() > m_Columns[m_Player.getInWhatColumnAmI()].getTop())
-	{
-		m_Player.MoveMeDown();
 	}
 }
 

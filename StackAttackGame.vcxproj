@@ -186,7 +186,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Block.cpp" />
-    <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="StackAttackGame.cpp" />
   </ItemGroup>
   <ItemGroup>

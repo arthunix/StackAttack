@@ -143,12 +143,12 @@ int StackAttack()
 
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_RIGHT:
-				//gamespace.hominhomovright();
-				//gamespace.callGravity();
+				gamespace.movePlayerRight();
+				gamespace.playerFallForever();
 				break;
 			case ALLEGRO_KEY_LEFT:
-				//gamespace.hominhomovleft();
-				//gamespace.callGravity();
+				gamespace.movePlayerLeft();
+				gamespace.playerFallForever();
 				break;
 			case ALLEGRO_KEY_UP:
 				gamespace.playerJump();
@@ -159,7 +159,7 @@ int StackAttack()
 		{
 			switch (event.keyboard.keycode) {
 			case ALLEGRO_KEY_UP:
-				//gamespace.hominhofall();
+				gamespace.playerFallForever();
 				break;
 			}
 		}
@@ -181,6 +181,7 @@ int StackAttack()
 			if (gamespace.flushAllFirstElementsInEachColumn())
 			{
 				score = score + 100;
+				gamespace.playerFallForever();
 			}
 		}
 
