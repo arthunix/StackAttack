@@ -16,7 +16,7 @@ private:
 	bool canImoveABlockToTheLeftColumn(unsigned short);
 	bool canImoveABlockToTheRightColumn(unsigned short);
 	bool areTheFirstBlocksOccupedAtAllTheColumns();
-	void insertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color);
+	//void insertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color);
 public:
 	Game();
 	~Game();
@@ -83,17 +83,6 @@ inline bool Game<sizeOfTheStack, numberOfStacks>::areTheFirstBlocksOccupedAtAllT
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
-inline void Game<sizeOfTheStack, numberOfStacks>::insertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color)
-{
-	if (((0 <= p_Column) && (p_Column < numberOfStacks)) 
-		&& ((0 <= p_Line) && (p_Line < sizeOfTheStack)) 
-		&& ((MIN_VALID_COLOR <= p_Color) && (p_Color <= MAX_VALID_COLOR)))
-	{
-		m_Columns[p_Column].insertBlock(p_Color, p_Line);
-	}
-}
-
-template<int sizeOfTheStack, int numberOfStacks>
 inline void Game<sizeOfTheStack, numberOfStacks>::playerFallForever()
 {
 	while(m_Player.getInWhatLineAmI() > m_Columns[m_Player.getInWhatColumnAmI()].getTop())
@@ -118,7 +107,7 @@ inline void Game<sizeOfTheStack, numberOfStacks>::insertBlockAtTheColumn(unsigne
 	if (((0 <= p_Column) && (p_Column < numberOfStacks))
 		&& ((MIN_VALID_COLOR <= p_Color) && (p_Color <= MAX_VALID_COLOR)))
 	{
-		m_Columns[p_Column].insertBlock(p_Color, sizeOfTheStack - 1);
+		m_Columns[p_Column].insertBlock(p_Color);
 	}
 }
 
@@ -156,19 +145,26 @@ inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerLeft()
 template<int sizeOfTheStack, int numberOfStacks>
 inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerRight()
 {
-	//m_Player.MoveMeRight();
+	if (m_Player.getInWhatColumnAmI() == numberOfStacks - 1)
+		return;
 
-	if (m_Player.getInWhatLineAmI() >= m_Columns[m_Player.getInWhatColumnAmI()+1].getTop())
+	if (m_Player.getInWhatLineAmI() >= m_Columns[m_Player.getInWhatColumnAmI() + 1].getTop())
 	{
 		m_Player.MoveMeRight();
-		std::cout << "mov right 1" << std::endl;
 	}
 	else
 	{
-		//unsigned int playerColumn;
-		if (canImoveABlockToTheRightColumn(m_Player.getInWhatColumnAmI()+1))
+		if (m_Player.getInWhatColumnAmI() + 1 == numberOfStacks - 1)
 		{
-			std::cout << "mov right 2" << std::endl;
+		}
+		else
+		{
+			if (m_Columns[m_Player.getInWhatColumnAmI() + 1].getTop() >= m_Columns[m_Player.getInWhatColumnAmI() + 2].getTop())
+			{
+				unsigned short temp_color = m_Columns[m_Player.getInWhatColumnAmI() + 1].removeTopBlock();
+				m_Columns[m_Player.getInWhatColumnAmI() + 2].insertBlockAtTop(temp_color);
+				m_Player.MoveMeRight();
+			}
 		}
 	}
 }

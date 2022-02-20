@@ -18,7 +18,7 @@ public:
 	void setTop(unsigned short);
 	unsigned short getTop();
 	void insertBlock(unsigned short p_Color);
-	void insertBlock(unsigned short p_Color, unsigned short p_Line);
+	void insertBlockAtTop(unsigned short p_Color);
 	unsigned int removeTopBlock();
 	bool isThatColumnFull();
 	unsigned short getBlockColor(unsigned short p_Line);
@@ -63,14 +63,12 @@ void Stack<sizeOfTheStack>::insertBlock(unsigned short p_Color)
 }
 
 template<int sizeOfTheStack>
-void Stack<sizeOfTheStack>::insertBlock(unsigned short p_Color, unsigned short p_Line)
+void Stack<sizeOfTheStack>::insertBlockAtTop(unsigned short p_Color)
 {
 	if ((MIN_VALID_COLOR <= p_Color) && (p_Color <= MAX_VALID_COLOR))
 	{
-		if ((0 <= p_Line) && (p_Line <= sizeOfTheStack))
-		{
-			m_Column[sizeOfTheStack - 1].setColor(p_Color);
-		}
+		m_Column[m_Top].setColor(p_Color);
+		m_Top += 1;
 	}
 }
 
