@@ -11,11 +11,11 @@ class Game {
 private:
 	Stack<sizeOfTheStack> m_Columns[numberOfStacks];
 	Player<numberOfStacks> m_Player = { numberOfStacks /2, 0 };
-	bool isTheLeftOccupedByABlockOrNot(unsigned short);
-	bool isTheRightOccupedByABlockOrNot(unsigned short);
-	bool canImoveABlockToTheLeftColumn(unsigned short);
-	bool canImoveABlockToTheRightColumn(unsigned short);
 	bool areTheFirstBlocksOccupedAtAllTheColumns();
+	//bool isTheLeftOccupedByABlockOrNot(unsigned short);
+	//bool isTheRightOccupedByABlockOrNot(unsigned short);
+	//bool canImoveABlockToTheLeftColumn(unsigned short);
+	//bool canImoveABlockToTheRightColumn(unsigned short);
 	//void insertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color);
 public:
 	Game();
@@ -32,42 +32,6 @@ public:
 	unsigned short getPlayerPositionLine();
 	void playerFallForever();
 };
-
-template<int sizeOfTheStack, int numberOfStacks>
-inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheLeftColumn(unsigned short Column)
-{
-	if (Column == 0) {
-		return true;
-	}
-	if ((0 <= Column) && (Column < numberOfStacks)) {
-		return m_Columns[Column - 1].getTop() > m_Columns[Column].getTop();
-	}
-	return false;
-}
-
-template<int sizeOfTheStack, int numberOfStacks>
-inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheRightColumn(unsigned short Column)
-{
-	if (Column >= numberOfStacks - 1) {
-		return true;
-	}
-	if ((0 <= Column) && (Column < numberOfStacks)) {
-		return m_Columns[Column].getTop() < m_Columns[Column + 1].getTop();
-	}
-	return false;
-}
-
-/*template<int sizeOfTheStack, int numberOfStacks>
-inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheLeftColumn(unsigned short Column)
-{
-	return !isTheLeftOccupedByABlockOrNot(Column - 1);
-}
-
-template<int sizeOfTheStack, int numberOfStacks>
-inline bool Game<sizeOfTheStack, numberOfStacks>::canImoveABlockToTheRightColumn(unsigned short Column)
-{
-	return !isTheRightOccupedByABlockOrNot(Column + 1);
-}*/
 
 template<int sizeOfTheStack, int numberOfStacks>
 inline bool Game<sizeOfTheStack, numberOfStacks>::areTheFirstBlocksOccupedAtAllTheColumns()
