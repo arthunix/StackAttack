@@ -12,10 +12,10 @@ private:
 	Stack<sizeOfTheStack> m_Columns[numberOfStacks];
 	Player<numberOfStacks> m_Player = { numberOfStacks /2, 0 };
 	bool areTheFirstBlocksOccupedAtAllTheColumns();
-	//bool isTheLeftOccupedByABlockOrNot(unsigned short);
-	//bool isTheRightOccupedByABlockOrNot(unsigned short);
-	//bool canImoveABlockToTheLeftColumn(unsigned short);
-	//bool canImoveABlockToTheRightColumn(unsigned short);
+	//bool isTheLeftOccupedByABlockOrNot(unsigned short p_Column);
+	//bool isTheRightOccupedByABlockOrNot(unsigned short p_Column);
+	//bool canImoveABlockToTheLeftColumn(unsigned short p_Column);
+	//bool canImoveABlockToTheRightColumn(unsigned short p_Column);
 	//void insertBlockAtTheColumn(unsigned short p_Line, unsigned short p_Column, unsigned short p_Color);
 public:
 	Game();
@@ -103,7 +103,31 @@ inline bool Game<sizeOfTheStack, numberOfStacks>::flushAllFirstElementsInEachCol
 template<int sizeOfTheStack, int numberOfStacks>
 inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerLeft()
 {
-	m_Player.MoveMeLeft();
+	/* For this we have the base case : The player is in the first column, unable to move left */
+	if (m_Player.getInWhatColumnAmI() == 0)
+		return;
+
+	/* For this we have the case : The player free to move right with no obtacles */
+	if (m_Player.getInWhatLineAmI() >= m_Columns[m_Player.getInWhatColumnAmI() - 1].getTop())
+	{
+		m_Player.MoveMeLeft();
+	}
+	else
+	{
+		/* For this we have the case : the next column is the last and it's occuped */
+		if (m_Player.getInWhatColumnAmI() - 1 == 0) {}
+		else
+		{
+			/* For this we have the case : We can push the block to the right column */
+			if ((m_Columns[m_Player.getInWhatColumnAmI() - 1].getTop() > m_Columns[m_Player.getInWhatColumnAmI() - 2].getTop())
+				&& ((m_Player.getInWhatLineAmI() + 1) == m_Columns[m_Player.getInWhatColumnAmI() - 1].getTop()))
+			{
+				unsigned short temp_color = m_Columns[m_Player.getInWhatColumnAmI() - 1].removeTopBlock();
+				m_Columns[m_Player.getInWhatColumnAmI() - 2].insertBlockAtTop(temp_color);
+				m_Player.MoveMeLeft();
+			}
+		}
+	}
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
