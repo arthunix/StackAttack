@@ -109,21 +109,24 @@ inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerLeft()
 template<int sizeOfTheStack, int numberOfStacks>
 inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerRight()
 {
+	/* For this we have the base case : The player is in the last column, unable to move right */
 	if (m_Player.getInWhatColumnAmI() == numberOfStacks - 1)
 		return;
 
+	/* For this we have the case : The player free to move right with no obtacles */
 	if (m_Player.getInWhatLineAmI() >= m_Columns[m_Player.getInWhatColumnAmI() + 1].getTop())
 	{
 		m_Player.MoveMeRight();
 	}
 	else
 	{
-		if (m_Player.getInWhatColumnAmI() + 1 == numberOfStacks - 1)
-		{
-		}
+		/* For this we have the case : the next column is the last and it's occuped */
+		if (m_Player.getInWhatColumnAmI() + 1 == numberOfStacks - 1) { }
 		else
 		{
-			if (m_Columns[m_Player.getInWhatColumnAmI() + 1].getTop() >= m_Columns[m_Player.getInWhatColumnAmI() + 2].getTop())
+			/* For this we have the case : We can push the block to the right column */
+			if ((m_Columns[m_Player.getInWhatColumnAmI() + 1].getTop() > m_Columns[m_Player.getInWhatColumnAmI() + 2].getTop())
+				&& ((m_Player.getInWhatLineAmI() + 1) == m_Columns[m_Player.getInWhatColumnAmI() + 1].getTop()))
 			{
 				unsigned short temp_color = m_Columns[m_Player.getInWhatColumnAmI() + 1].removeTopBlock();
 				m_Columns[m_Player.getInWhatColumnAmI() + 2].insertBlockAtTop(temp_color);
