@@ -13,17 +13,20 @@ Block::Block(unsigned short p_Color)
 	}
 }
 
-Block::~Block(){
+Block::~Block()
+{
 	setColor(0);
 }
 
-void Block::setColor(unsigned short p_Color) {
+void Block::setColor(unsigned short p_Color)
+{
 	if ((MIN_VALID_COLOR <= p_Color) && (p_Color <= MAX_VALID_COLOR))
 	{
 		this->m_Color = p_Color;
 	}
 }
 
-unsigned short Block::getColor() {
+unsigned short Block::getColor()
+{
 	return m_Color;
 }

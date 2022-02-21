@@ -128,6 +128,10 @@ inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerLeft()
 			}
 		}
 	}
+	if ((m_Columns[m_Player.getInWhatColumnAmI()].getBlockColor(m_Player.getInWhatLineAmI() + 1) != BLOCK_INACTIVE))
+	{
+		m_Player.setAmIAlive(false);
+	}
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
@@ -158,12 +162,20 @@ inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerRight()
 			}
 		}
 	}
+	if ((m_Columns[m_Player.getInWhatColumnAmI()].getBlockColor(m_Player.getInWhatLineAmI() + 1) != BLOCK_INACTIVE))
+	{
+		m_Player.setAmIAlive(false);
+	}
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
 inline void Game<sizeOfTheStack, numberOfStacks>::playerJump()
 {
 	m_Player.MoveMeUp();
+	if ((m_Columns[m_Player.getInWhatColumnAmI()].getBlockColor(m_Player.getInWhatLineAmI() + 1) != BLOCK_INACTIVE))
+	{
+		m_Player.setAmIAlive(false);
+	}
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
@@ -173,11 +185,16 @@ inline void Game<sizeOfTheStack, numberOfStacks>::callGravity()
 	{
 		m_Columns[itrEachColumn].columnCallGravity();
 	}
+	if ((m_Columns[m_Player.getInWhatColumnAmI()].getBlockColor(m_Player.getInWhatLineAmI() + 1) != BLOCK_INACTIVE))
+	{
+		m_Player.setAmIAlive(false);
+	}
 }
 
 template<int sizeOfTheStack, int numberOfStacks>
 inline bool Game<sizeOfTheStack, numberOfStacks>::checkPlayerLife()
 {
+
 	return m_Player.getAmIAlive();
 }
 
