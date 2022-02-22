@@ -75,7 +75,7 @@ void Stack<sizeOfTheStack>::insertBlockAtTop(unsigned short p_Color)
 template<int sizeOfTheStack>
 inline unsigned int Stack<sizeOfTheStack>::removeTopBlock()
 {
-	unsigned int returnValue;
+	unsigned int returnValue = BLOCK_INACTIVE;
 	if (m_Top > 0)
 	{
 		returnValue = m_Column[m_Top - 1].getColor();
