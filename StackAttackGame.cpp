@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 #include <allegro5/allegro5.h>
 #include <allegro5/allegro_font.h>
@@ -59,6 +60,7 @@ int StackAttack()
 	ALLEGRO_SAMPLE* backgroundmusic = NULL;
 	ALLEGRO_SAMPLE_INSTANCE* backgroundmusicinstance = NULL;
 	Game<NUMBER_OF_BLOCKS_IN_COLUMN, NUMBER_OF_COLUMNS_ON_SPACE> gamespace;
+	unsigned short columnOfTheLastInsertedBlock = -1;
 
 
 	/* Allegro display creation and initialization */
@@ -120,7 +122,9 @@ int StackAttack()
 	al_register_event_source(event_queue, al_get_timer_event_source(timer));
 
 	al_start_timer(timer);
-	//al_play_sample_instance(backgroundmusicinstance);
+	al_play_sample_instance(backgroundmusicinstance);
+
+	srand(time(NULL));
 	
 	while (!stop)
 	{
@@ -136,7 +140,6 @@ int StackAttack()
 			}
 			if (event.keyboard.keycode == ALLEGRO_KEY_SPACE)
 			{
-				// Space for restart game
 				restart = true;
 				stop = true;
 			}
@@ -166,18 +169,30 @@ int StackAttack()
 
 		if (event.type == ALLEGRO_EVENT_TIMER)
 		{
-			//gamespace.blockfall();
-			//gamespace.sethominholife();
-			if (al_get_timer_count(timer) % 2 == 0)
+			if (al_get_timer_count(timer) % 2  == 0)
 			{
 				gamespace.callGravity();
+			}
+
+			if (al_get_timer_count(timer) % 5 == 0)
+			{
 				int newColorOfTheInsertedBlock = rand() % 7;
 				int newColumnOfTheInsertedBlock = rand() % 10;
-				if (newColorOfTheInsertedBlock != BLOCK_INACTIVE)
+
+				while (newColumnOfTheInsertedBlock == columnOfTheLastInsertedBlock)
 				{
-					gamespace.insertBlockAtTheColumn(newColorOfTheInsertedBlock, newColumnOfTheInsertedBlock);
+					newColumnOfTheInsertedBlock = rand() % 10;
 				}
+
+				while (newColorOfTheInsertedBlock == BLOCK_INACTIVE)
+				{
+					newColorOfTheInsertedBlock = rand() % 7;
+				}
+
+				columnOfTheLastInsertedBlock = newColumnOfTheInsertedBlock;
+				gamespace.insertBlockAtTheColumn(newColorOfTheInsertedBlock, newColumnOfTheInsertedBlock);
 			}
+
 			if (gamespace.flushAllFirstElementsInEachColumn())
 			{
 				score = score + 100;
