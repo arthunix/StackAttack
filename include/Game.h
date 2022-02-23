@@ -1,3 +1,31 @@
+/*
+Copyright (c) 2021-2022 Arthur Eugenio Silverio. All rights reserved.
+Copyright (c) 2021-2022 Ingrid Lira dos Santos. All rights reserved.
+Copyright (c) 2021-2022 Arthur Eugenio Silverio. All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are
+met:
+
+1. Redistributions of source code must retain the above copyright
+notice, this list of conditions and the following disclaimer.
+2. Redistributions in binary form must reproduce the above copyright
+   notice, this list of conditions, and the following disclaimer in the
+   documentation and/or other materials provided with the distribution.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS"
+AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
+IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
+ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE
+LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
+CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
+SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
+INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
+CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+POSSIBILITY OF SUCH DAMAGE.
+*/
+
 #pragma once
 #ifndef _SPACE_H
 #define _SPACE_H
@@ -7,7 +35,8 @@
 #include "Player.h"
 
 template<int sizeOfTheStack, int numberOfStacks>
-class Game {
+class Game
+{
 private:
 	Stack<sizeOfTheStack> m_Columns[numberOfStacks];
 	Player<numberOfStacks> m_Player = { numberOfStacks /2, 0 };
@@ -107,18 +136,18 @@ inline void Game<sizeOfTheStack, numberOfStacks>::movePlayerLeft()
 	if (m_Player.getInWhatColumnAmI() == 0)
 		return;
 
-	/* For this we have the case : The player free to move right with no obtacles */
+	/* For this we have the case : The player free to move left with no obtacles */
 	if (m_Player.getInWhatLineAmI() >= m_Columns[m_Player.getInWhatColumnAmI() - 1].getTop())
 	{
 		m_Player.MoveMeLeft();
 	}
 	else
 	{
-		/* For this we have the case : the next column is the last and it's occuped */
+		/* For this we have the case : the previous column is the first and it's occuped */
 		if (m_Player.getInWhatColumnAmI() - 1 == 0) {}
 		else
 		{
-			/* For this we have the case : We can push the block to the right column */
+			/* For this we have the case : We can push the block to the left column */
 			if ((m_Columns[m_Player.getInWhatColumnAmI() - 1].getTop() > m_Columns[m_Player.getInWhatColumnAmI() - 2].getTop())
 				&& ((m_Player.getInWhatLineAmI() + 1) == m_Columns[m_Player.getInWhatColumnAmI() - 1].getTop()))
 			{
